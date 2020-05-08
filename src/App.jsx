@@ -5,20 +5,10 @@ const BatteryContext = createContext(90) //90为默认值
 const OnlineContext = createContext()
 
 class Leaf extends Component {
+  static contextType = BatteryContext
   render() {
-    return (
-      <BatteryContext.Consumer>
-        {(battery) => (
-          <OnlineContext.Consumer>
-            {(online) => (
-              <h1>
-                Battery:{battery},Online:{String(online)}
-              </h1>
-            )}
-          </OnlineContext.Consumer>
-        )}
-      </BatteryContext.Consumer>
-    )
+    const battery = this.context
+    return <h1>Battery:{battery}</h1>
   }
 }
 
