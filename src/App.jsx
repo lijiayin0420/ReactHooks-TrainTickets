@@ -3,8 +3,6 @@ import { createSet, createAdd, createRemove, createToggle } from './actions'
 import reducer from './reducers'
 import './App.css'
 
-let idSeq = Date.now()
-
 function bindActionCreators(actionCreators, dispatch) {
   const ret = {}
 
@@ -32,11 +30,7 @@ const Control = function Control(props) {
       return
     }
 
-    addTodo({
-      id: ++idSeq,
-      text: newText,
-      complete: false,
-    })
+    addTodo(newText)
 
     inputRef.current.value = ''
   }
@@ -102,9 +96,21 @@ const Todos = function Todos(props) {
 
 const LS_KEY = '_$-todos_'
 
+let store = {
+  todos: [],
+  incrementCount: 0,
+}
+
 function TodoList() {
   const [todos, setTodos] = useState([])
   const [incrementCount, setIncrementCount] = useState(0)
+
+  useEffect(() => {
+    Object.assign(store, {
+      todos,
+      incrementCount,
+    })
+  }, [todos, incrementCount])
 
   const addTodo = useCallback((todo) => {
     setTodos((todos) => [...todos, todo])
@@ -125,8 +131,6 @@ function TodoList() {
       }),
     )
   }, [])
-
-
 
   // function reducer(state, action) {
   //   const { type, payload } = action
@@ -196,25 +200,27 @@ function TodoList() {
   //   }
   // }, [])
 
-  const dispatch = useCallback(
-    (action) => {
-      const state = {
-        todos,
-        incrementCount,
-      }
+  const dispatch = (action) => {
+    // const state = {
+    //   todos,
+    //   incrementCount,
+    // }
 
-      const setters = {
-        todos: setTodos,
-        incrementCount: setIncrementCount,
-      }
+    const setters = {
+      todos: setTodos,
+      incrementCount: setIncrementCount,
+    }
 
-      const newState = reducer(state, action)
-      for (let key in newState) {
-        setters[key](newState[key])
-      }
-    },
-    [todos, incrementCount],
-  )
+    if ('function' === typeof action) {
+      action(dispatch, () => store)
+      return
+    }
+
+    const newState = reducer(store, action)
+    for (let key in newState) {
+      setters[key](newState[key])
+    }
+  }
 
   //使用多个useEffect，从上往下顺序执行
   useEffect(() => {
