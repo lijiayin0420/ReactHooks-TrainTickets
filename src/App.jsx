@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react'
 import { createSet, createAdd, createRemove, createToggle } from './actions'
+import reducer from './reducers'
 import './App.css'
 
 let idSeq = Date.now()
@@ -103,6 +104,7 @@ const LS_KEY = '_$-todos_'
 
 function TodoList() {
   const [todos, setTodos] = useState([])
+  const [incrementCount, setIncrementCount] = useState(0)
 
   const addTodo = useCallback((todo) => {
     setTodos((todos) => [...todos, todo])
@@ -124,34 +126,95 @@ function TodoList() {
     )
   }, [])
 
-  const dispatch = useCallback((action) => {
-    const { type, payload } = action
-    switch (type) {
-      case 'set':
-        setTodos(payload)
-        break
-      case 'add':
-        setTodos((todos) => [...todos, payload])
-        break
-      case 'remove':
-        setTodos((todos) =>
-          todos.filter((todo) => {
-            return todo.id !== payload
-          }),
-        )
-        break
-      case 'toggle':
-        setTodos((todos) =>
-          todos.map((todo) => {
-            return todo.id === payload
-              ? { ...todo, complete: !todo.complete }
-              : todo
-          }),
-        )
-        break
-      default:
-    }
-  }, [])
+
+
+  // function reducer(state, action) {
+  //   const { type, payload } = action
+  //   const { todos, incrementCount } = state
+
+  //   switch (type) {
+  //     case 'set':
+  //       return {
+  //         ...state,
+  //         todos: payload,
+  //         incrementCount: incrementCount + 1,
+  //       }
+  //     case 'add':
+  //       return {
+  //         ...state,
+  //         todos: [...todos, payload],
+  //         incrementCount: incrementCount + 1,
+  //       }
+  //     case 'remove':
+  //       return {
+  //         ...state,
+  //         todos: todos.filter((todo) => {
+  //           return todo.id !== payload
+  //         }),
+  //       }
+  //     case 'toggle':
+  //       return {
+  //         ...state,
+  //         todos: todos.map((todo) => {
+  //           return todo.id === payload
+  //             ? { ...todo, complete: !todo.complete }
+  //             : todo
+  //         }),
+  //       }
+  //     default:
+  //   }
+  // }
+
+  // const dispatch = useCallback((action) => {
+  //   const { type, payload } = action
+  //   switch (type) {
+  //     case 'set':
+  //       setTodos(payload)
+  //       setIncrementCount((c) => c + 1)
+  //       break
+  //     case 'add':
+  //       setTodos((todos) => [...todos, payload])
+  //       setIncrementCount((c) => c + 1)
+  //       break
+  //     case 'remove':
+  //       setTodos((todos) =>
+  //         todos.filter((todo) => {
+  //           return todo.id !== payload
+  //         }),
+  //       )
+  //       break
+  //     case 'toggle':
+  //       setTodos((todos) =>
+  //         todos.map((todo) => {
+  //           return todo.id === payload
+  //             ? { ...todo, complete: !todo.complete }
+  //             : todo
+  //         }),
+  //       )
+  //       break
+  //     default:
+  //   }
+  // }, [])
+
+  const dispatch = useCallback(
+    (action) => {
+      const state = {
+        todos,
+        incrementCount,
+      }
+
+      const setters = {
+        todos: setTodos,
+        incrementCount: setIncrementCount,
+      }
+
+      const newState = reducer(state, action)
+      for (let key in newState) {
+        setters[key](newState[key])
+      }
+    },
+    [todos, incrementCount],
+  )
 
   //使用多个useEffect，从上往下顺序执行
   useEffect(() => {
