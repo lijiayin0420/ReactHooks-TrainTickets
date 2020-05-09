@@ -7,112 +7,129 @@ import React, {
   PureComponent,
   useEffect,
 } from 'react'
+import './App.css'
 
-/**
- * 改写Counter为类组件
- * 类组件才能实例化，才能使用ref属性
- */
-// class Counter extends PureComponent {
-//   render() {
-//     const { props } = this
-//     return <h1>{props.count}</h1>
-//   }
-// }
-// const Counter = memo(function Counter(props) {
-//   console.log('Counter render')
-//   return <h1 onClick={props.onClick}>{props.count}</h1>
-// })
+let idSeq = Date.now()
 
-function useCounter(count) {
-  const size = useSize()
-  return (
-    <h1>
-      {count},{size.width}x{size.height}
-    </h1>
-  )
-}
+const Control = function Control(props) {
+  const { addTodo } = props
+  const inputRef = useRef()
 
-function useCount(defaultCount) {
-  const [count, setCount] = useState(0)
-  const it = useRef()
+  const onSubmit = (e) => {
+    e.preventDefault()
+    const newText = inputRef.current.value.trim()
+    console.log(inputRef.current)
 
-  useEffect(() => {
-    it.current = setInterval(() => {
-      setCount((count) => count + 1)
-    }, 1000)
-  }, [])
-
-  useEffect(() => {
-    if (count >= 10) {
-      clearInterval(it.current)
+    if (newText.length === 0) {
+      return
     }
-  })
-
-  return [count, setCount]
-}
-
-function useSize() {
-  const [size, setSize] = useState({
-    width: document.documentElement.clientWidth,
-    height: document.documentElement.clientHeight,
-  })
-
-  const onResize = useCallback(() => {
-    setSize({
-      width: document.documentElement.clientWidth,
-      height: document.documentElement.clientHeight,
+    addTodo({
+      id: ++idSeq,
+      text: newText,
+      complete: false,
     })
-  }, [])
 
-  useEffect(() => {
-    window.addEventListener('resize', onResize, false)
-
-    return () => {
-      window.removeEventListener('resize', onResize, false)
-    }
-  }, [])
-
-  return size
-}
-
-function App(props) {
-  const [count, setCount] = useCount(0)
-  const Counter = useCounter(count)
-  const size = useSize()
-  // const it = useRef()
-
-  /**
-   * 与useEffect不同，useEffect在渲染后执行
-   * useMemo在渲染期间执行，有返回值
-   * useMemo(()=>fn) === useCallback(fn)
-   */
-
-  // useEffect(() => {
-  //   it.current = setInterval(() => {
-  //     setCount((count) => count + 1)
-  //   }, 1000)
-  // }, [])
-
-  // useEffect(() => {
-  //   if (count >= 10) {
-  //     clearInterval(it.current)
-  //   }
-  // })
+    inputRef.current.value = ''
+  }
 
   return (
-    <div>
-      <button
-        type="button"
-        onClick={() => {
-          setCount(count + 1)
-        }}
-      >
-        Click ({count}),{size.width}x{size.height}
-      </button>
-      {/* <Counter count={count} /> */}
-      {Counter}
+    <div className="control">
+      <h1>todos</h1>
+      <form onSubmit={onSubmit}>
+        <input
+          type="text"
+          ref={inputRef}
+          className="new-todo"
+          placeholder="What needs to be done?"
+        />
+      </form>
     </div>
   )
 }
 
-export default App
+const TodoItem = function TodoItem(props) {
+  const {
+    todo: { id, text, complete },
+    toggleTodo,
+    removeTodo,
+  } = props
+
+  const onChange = () => {
+    toggleTodo(id)
+  }
+
+  const onRemove = () => {
+    removeTodo(id)
+  }
+
+  return (
+    <li className="todo-item">
+      <input type="checkbox" onChange={onChange} checked={complete} />
+      <label className={complete ? 'complete' : ''}>{text}</label>
+      <button onClick={onRemove}>&#xd7;</button>
+    </li>
+  )
+}
+
+const Todos = function Todos(props) {
+  const { todos, toggleTodo, removeTodo } = props
+  return (
+    <ul>
+      {todos.map((todo) => {
+        return (
+          <TodoItem
+            key={todo.id}
+            todo={todo}
+            toggleTodo={toggleTodo}
+            removeTodo={removeTodo}
+          />
+        )
+      })}
+    </ul>
+  )
+}
+
+const LS_KEY = '_$-todos_'
+
+function TodoList() {
+  const [todos, setTodos] = useState([])
+
+  const addTodo = useCallback((todo) => {
+    setTodos((todos) => [...todos, todo])
+  }, [])
+
+  const removeTodo = useCallback((id) => {
+    setTodos((todos) =>
+      todos.filter((todo) => {
+        return todo.id !== id
+      }),
+    )
+  }, [])
+
+  const toggleTodo = useCallback((id) => {
+    setTodos((todos) =>
+      todos.map((todo) => {
+        return todo.id === id ? { ...todo, complete: !todo.complete } : todo
+      }),
+    )
+  }, [])
+
+  //使用多个useEffect，从上往下顺序执行
+  useEffect(() => {
+    const todos = JSON.parse(localStorage.getItem(LS_KEY) || '[]')
+    setTodos(todos)
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem(LS_KEY, JSON.stringify(todos))
+  }, [todos])
+
+  return (
+    <div className="todo-list">
+      <Control addTodo={addTodo} />
+      <Todos removeTodo={removeTodo} toggleTodo={toggleTodo} todos={todos} />
+    </div>
+  )
+}
+
+export default TodoList
