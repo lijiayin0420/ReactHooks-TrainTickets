@@ -12,39 +12,29 @@ import React, {
  * 改写Counter为类组件
  * 类组件才能实例化，才能使用ref属性
  */
-class Counter extends PureComponent {
-  speak() {
-    console.log(`now counter is: ${this.props.count}`)
-  }
-  render() {
-    const { props } = this
-    return <h1 onClick={props.onClick}>{props.count}</h1>
-  }
-}
+// class Counter extends PureComponent {
+//   render() {
+//     const { props } = this
+//     return <h1>{props.count}</h1>
+//   }
+// }
 // const Counter = memo(function Counter(props) {
 //   console.log('Counter render')
 //   return <h1 onClick={props.onClick}>{props.count}</h1>
 // })
 
-function App(props) {
+function useCounter(count) {
+  const size = useSize()
+  return (
+    <h1>
+      {count},{size.width}x{size.height}
+    </h1>
+  )
+}
+
+function useCount(defaultCount) {
   const [count, setCount] = useState(0)
-  const counterRef = useRef()
   const it = useRef()
-
-  /**
-   * 与useEffect不同，useEffect在渲染后执行
-   * useMemo在渲染期间执行，有返回值
-   * useMemo(()=>fn) === useCallback(fn)
-   */
-  const double = useMemo(() => {
-    return count * 2
-  }, [count === 3])
-
-  const onClick = useCallback(() => {
-    console.log('click')
-    // console.log(counterRef.current)
-    counterRef.current.speak()
-  }, [counterRef])
 
   useEffect(() => {
     it.current = setInterval(() => {
@@ -58,6 +48,57 @@ function App(props) {
     }
   })
 
+  return [count, setCount]
+}
+
+function useSize() {
+  const [size, setSize] = useState({
+    width: document.documentElement.clientWidth,
+    height: document.documentElement.clientHeight,
+  })
+
+  const onResize = useCallback(() => {
+    setSize({
+      width: document.documentElement.clientWidth,
+      height: document.documentElement.clientHeight,
+    })
+  }, [])
+
+  useEffect(() => {
+    window.addEventListener('resize', onResize, false)
+
+    return () => {
+      window.removeEventListener('resize', onResize, false)
+    }
+  }, [])
+
+  return size
+}
+
+function App(props) {
+  const [count, setCount] = useCount(0)
+  const Counter = useCounter(count)
+  const size = useSize()
+  // const it = useRef()
+
+  /**
+   * 与useEffect不同，useEffect在渲染后执行
+   * useMemo在渲染期间执行，有返回值
+   * useMemo(()=>fn) === useCallback(fn)
+   */
+
+  // useEffect(() => {
+  //   it.current = setInterval(() => {
+  //     setCount((count) => count + 1)
+  //   }, 1000)
+  // }, [])
+
+  // useEffect(() => {
+  //   if (count >= 10) {
+  //     clearInterval(it.current)
+  //   }
+  // })
+
   return (
     <div>
       <button
@@ -66,9 +107,10 @@ function App(props) {
           setCount(count + 1)
         }}
       >
-        Click ({count}) double:({double})
+        Click ({count}),{size.width}x{size.height}
       </button>
-      <Counter ref={counterRef} count={double} onClick={onClick} />
+      {/* <Counter count={count} /> */}
+      {Counter}
     </div>
   )
 }
