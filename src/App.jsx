@@ -4,6 +4,20 @@ import './App.css'
 
 let idSeq = Date.now()
 
+function bindActionCreators(actionCreators, dispatch) {
+  const ret = {}
+
+  for (let key in actionCreators) {
+    ret[key] = function (...args) {
+      const actionCreator = actionCreators[key]
+      const action = actionCreator(...args)
+      dispatch(action)
+    }
+  }
+
+  return ret
+}
+
 const Control = function Control(props) {
   const { addTodo, dispatch } = props
   const inputRef = useRef()
@@ -17,13 +31,11 @@ const Control = function Control(props) {
       return
     }
 
-    dispatch(
-      createAdd({
-        id: ++idSeq,
-        text: newText,
-        complete: false,
-      }),
-    )
+    addTodo({
+      id: ++idSeq,
+      text: newText,
+      complete: false,
+    })
 
     inputRef.current.value = ''
   }
@@ -52,11 +64,11 @@ const TodoItem = function TodoItem(props) {
   } = props
 
   const onChange = () => {
-    dispatch(createToggle(id))
+    toggleTodo(id)
   }
 
   const onRemove = () => {
-    dispatch(createRemove(id))
+    removeTodo(id)
   }
 
   return (
@@ -154,8 +166,24 @@ function TodoList() {
 
   return (
     <div className="todo-list">
-      <Control dispatch={dispatch} />
-      <Todos dispatch={dispatch} todos={todos} />
+      <Control
+        {...bindActionCreators(
+          {
+            addTodo: createAdd,
+          },
+          dispatch,
+        )}
+      />
+      <Todos
+        {...bindActionCreators(
+          {
+            removeTodo: createRemove,
+            toggleTodo: createToggle,
+          },
+          dispatch,
+        )}
+        todos={todos}
+      />
     </div>
   )
 }
