@@ -5,6 +5,7 @@ import React, {
   useCallback,
   useRef,
   PureComponent,
+  useEffect,
 } from 'react'
 
 /**
@@ -28,6 +29,7 @@ class Counter extends PureComponent {
 function App(props) {
   const [count, setCount] = useState(0)
   const counterRef = useRef()
+  const it = useRef()
 
   /**
    * 与useEffect不同，useEffect在渲染后执行
@@ -43,6 +45,18 @@ function App(props) {
     // console.log(counterRef.current)
     counterRef.current.speak()
   }, [counterRef])
+
+  useEffect(() => {
+    it.current = setInterval(() => {
+      setCount((count) => count + 1)
+    }, 1000)
+  }, [])
+
+  useEffect(() => {
+    if (count >= 10) {
+      clearInterval(it.current)
+    }
+  })
 
   return (
     <div>
