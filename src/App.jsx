@@ -1,9 +1,5 @@
-import React, {
-  useState,
-  useCallback,
-  useRef,
-  useEffect,
-} from 'react'
+import React, { useState, useCallback, useRef, useEffect } from 'react'
+import { createSet, createAdd, createRemove, createToggle } from './actions'
 import './App.css'
 
 let idSeq = Date.now()
@@ -21,14 +17,13 @@ const Control = function Control(props) {
       return
     }
 
-    dispatch({
-      type: 'add',
-      payload: {
+    dispatch(
+      createAdd({
         id: ++idSeq,
         text: newText,
         complete: false,
-      },
-    })
+      }),
+    )
 
     inputRef.current.value = ''
   }
@@ -57,17 +52,11 @@ const TodoItem = function TodoItem(props) {
   } = props
 
   const onChange = () => {
-    dispatch({
-      type: 'toggle',
-      payload: id,
-    })
+    dispatch(createToggle(id))
   }
 
   const onRemove = () => {
-    dispatch({
-      type: 'remove',
-      payload: id,
-    })
+    dispatch(createRemove(id))
   }
 
   return (
@@ -156,10 +145,7 @@ function TodoList() {
   useEffect(() => {
     const todos = JSON.parse(localStorage.getItem(LS_KEY) || '[]')
     setTodos(todos)
-    dispatch({
-      type: 'set',
-      payload: todos,
-    })
+    dispatch(createSet(todos))
   }, [])
 
   useEffect(() => {
