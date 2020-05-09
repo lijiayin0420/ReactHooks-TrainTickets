@@ -1,10 +1,7 @@
 import React, {
   useState,
-  useMemo,
-  memo,
   useCallback,
   useRef,
-  PureComponent,
   useEffect,
 } from 'react'
 import './App.css'
@@ -12,7 +9,7 @@ import './App.css'
 let idSeq = Date.now()
 
 const Control = function Control(props) {
-  const { addTodo } = props
+  const { addTodo, dispatch } = props
   const inputRef = useRef()
 
   const onSubmit = (e) => {
@@ -23,10 +20,14 @@ const Control = function Control(props) {
     if (newText.length === 0) {
       return
     }
-    addTodo({
-      id: ++idSeq,
-      text: newText,
-      complete: false,
+
+    dispatch({
+      type: 'add',
+      payload: {
+        id: ++idSeq,
+        text: newText,
+        complete: false,
+      },
     })
 
     inputRef.current.value = ''
@@ -52,14 +53,21 @@ const TodoItem = function TodoItem(props) {
     todo: { id, text, complete },
     toggleTodo,
     removeTodo,
+    dispatch,
   } = props
 
   const onChange = () => {
-    toggleTodo(id)
+    dispatch({
+      type: 'toggle',
+      payload: id,
+    })
   }
 
   const onRemove = () => {
-    removeTodo(id)
+    dispatch({
+      type: 'remove',
+      payload: id,
+    })
   }
 
   return (
@@ -72,7 +80,7 @@ const TodoItem = function TodoItem(props) {
 }
 
 const Todos = function Todos(props) {
-  const { todos, toggleTodo, removeTodo } = props
+  const { todos, toggleTodo, removeTodo, dispatch } = props
   return (
     <ul>
       {todos.map((todo) => {
@@ -82,6 +90,7 @@ const Todos = function Todos(props) {
             todo={todo}
             toggleTodo={toggleTodo}
             removeTodo={removeTodo}
+            dispatch={dispatch}
           />
         )
       })}
@@ -114,10 +123,43 @@ function TodoList() {
     )
   }, [])
 
+  const dispatch = useCallback((action) => {
+    const { type, payload } = action
+    switch (type) {
+      case 'set':
+        setTodos(payload)
+        break
+      case 'add':
+        setTodos((todos) => [...todos, payload])
+        break
+      case 'remove':
+        setTodos((todos) =>
+          todos.filter((todo) => {
+            return todo.id !== payload
+          }),
+        )
+        break
+      case 'toggle':
+        setTodos((todos) =>
+          todos.map((todo) => {
+            return todo.id === payload
+              ? { ...todo, complete: !todo.complete }
+              : todo
+          }),
+        )
+        break
+      default:
+    }
+  }, [])
+
   //使用多个useEffect，从上往下顺序执行
   useEffect(() => {
     const todos = JSON.parse(localStorage.getItem(LS_KEY) || '[]')
     setTodos(todos)
+    dispatch({
+      type: 'set',
+      payload: todos,
+    })
   }, [])
 
   useEffect(() => {
@@ -126,8 +168,8 @@ function TodoList() {
 
   return (
     <div className="todo-list">
-      <Control addTodo={addTodo} />
-      <Todos removeTodo={removeTodo} toggleTodo={toggleTodo} todos={todos} />
+      <Control dispatch={dispatch} />
+      <Todos dispatch={dispatch} todos={todos} />
     </div>
   )
 }
