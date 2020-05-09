@@ -1,12 +1,33 @@
-import React, { useState, useMemo, memo, useCallback } from 'react'
+import React, {
+  useState,
+  useMemo,
+  memo,
+  useCallback,
+  useRef,
+  PureComponent,
+} from 'react'
 
-const Counter = memo(function Counter(props) {
-  console.log('Counter render')
-  return <h1 onClick={props.onClick}>{props.count}</h1>
-})
+/**
+ * 改写Counter为类组件
+ * 类组件才能实例化，才能使用ref属性
+ */
+class Counter extends PureComponent {
+  speak() {
+    console.log(`now counter is: ${this.props.count}`)
+  }
+  render() {
+    const { props } = this
+    return <h1 onClick={props.onClick}>{props.count}</h1>
+  }
+}
+// const Counter = memo(function Counter(props) {
+//   console.log('Counter render')
+//   return <h1 onClick={props.onClick}>{props.count}</h1>
+// })
 
 function App(props) {
   const [count, setCount] = useState(0)
+  const counterRef = useRef()
 
   /**
    * 与useEffect不同，useEffect在渲染后执行
@@ -19,7 +40,9 @@ function App(props) {
 
   const onClick = useCallback(() => {
     console.log('click')
-  }, [])
+    // console.log(counterRef.current)
+    counterRef.current.speak()
+  }, [counterRef])
 
   return (
     <div>
@@ -31,7 +54,7 @@ function App(props) {
       >
         Click ({count}) double:({double})
       </button>
-      <Counter count={double} onClick={onClick} />
+      <Counter ref={counterRef} count={double} onClick={onClick} />
     </div>
   )
 }
