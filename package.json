@@ -67,7 +67,7 @@
     "webpack-manifest-plugin": "2.0.4",
     "workbox-webpack-plugin": "4.2.0"
   },
-  "proxy": "http://localhost:5000",
+  "proxy": "http://localhost:3300",
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
