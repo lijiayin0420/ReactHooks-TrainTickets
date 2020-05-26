@@ -1,10 +1,70 @@
-import React, { useState, useEffect, useMemo } from 'react'
-import classNames from 'classnames'
+import React, { useState, useEffect, useMemo, memo } from 'react'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
 import './CitySelector.css'
 
-export default function CitySelector(props) {
-  const { show, cityData, isLoading, onBack, fetchCityData, } = props
+const CityItem = memo(function CityItem(props) {
+  const { name, onSelect } = props
+
+  return (
+    <li className="city-li" onClick={() => onSelect(name)}>
+      {name}
+    </li>
+  )
+})
+
+CityItem.propTypes = {
+  name: PropTypes.string.isRequired,
+  onSelect: PropTypes.func.isRequired,
+}
+
+const CitySection = memo(function CitySection(props) {
+  const { title, cities = [], onSelect } = props
+
+  return (
+    <ul className="city-ul">
+      <li className="city-li">{title}</li>
+      {cities.map((city) => {
+        return <CityItem key={city.name} name={city.name} onSelect={onSelect} />
+      })}
+    </ul>
+  )
+})
+
+CitySection.propTypes = {
+  title: PropTypes.string.isRequired,
+  cities: PropTypes.array,
+  onSelect: PropTypes.func.isRequired,
+}
+
+const CityList = memo(function CityList(props) {
+  const { sections, onSelect } = props
+
+  return (
+    <div className="city-list">
+      <div className="city-cate">
+        {sections.map((section) => {
+          return (
+            <CitySection
+              key={section.title}
+              title={section.title}
+              cities={section.cities}
+              onSelect={onSelect}
+            />
+          )
+        })}
+      </div>
+    </div>
+  )
+})
+
+CityList.propTypes = {
+  sections: PropTypes.array.isRequired,
+  onSelect: PropTypes.func.isRequired,
+}
+
+const CitySelector = memo(function CitySelector(props) {
+  const { show, cityData, isLoading, onBack, fetchCityData, onSelect } = props
 
   const [searchKey, setSearchKey] = useState('')
 
@@ -16,6 +76,18 @@ export default function CitySelector(props) {
     }
     fetchCityData()
   }, [show, cityData, isLoading])
+
+  const outputCitySections = () => {
+    if (isLoading) {
+      return <div>loading</div>
+    }
+
+    if (cityData) {
+      return <CityList sections={cityData.cityList} onSelect={onSelect} />
+    }
+
+    return <div>error</div>
+  }
 
   return (
     <div className={classNames('city-selector', { hidden: !show })}>
@@ -39,16 +111,17 @@ export default function CitySelector(props) {
             onChange={(e) => setSearchKey(e.target.value)}
           />
         </div>
-        <div
+        <i
           className={classNames('search-clean', { hidden: key.length === 0 })}
           onClick={() => setSearchKey('')}
         >
           &#xf063;
-        </div>
+        </i>
       </div>
+      {outputCitySections()}
     </div>
   )
-}
+})
 
 CitySelector.propTypes = {
   show: PropTypes.bool.isRequired,
@@ -56,4 +129,7 @@ CitySelector.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   onBack: PropTypes.func.isRequired,
   fetchCityData: PropTypes.func.isRequired,
+  onSelect: PropTypes.func.isRequired,
 }
+
+export default CitySelector
