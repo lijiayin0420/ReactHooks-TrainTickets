@@ -38,7 +38,6 @@ function App(props) {
       {
         exchangeFromTo,
         showCitySelector,
-        onSelect: setSelectedCity,
       },
       dispatch,
     )
@@ -49,6 +48,7 @@ function App(props) {
       {
         onBack: hideCitySelector,
         fetchCityData,
+        onSelect: setSelectedCity,
       },
       dispatch,
     )

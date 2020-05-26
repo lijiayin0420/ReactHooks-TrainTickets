@@ -48,7 +48,7 @@ const CityList = memo(function CityList(props) {
             <CitySection
               key={section.title}
               title={section.title}
-              cities={section.cities}
+              cities={section.citys}
               onSelect={onSelect}
             />
           )
