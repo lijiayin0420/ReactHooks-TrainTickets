@@ -64,7 +64,7 @@ export default {
     }
     return state
   },
-  isDateSelectorVisibleL(state = false, action) {
+  isDateSelectorVisible(state = false, action) {
     const { type, payload } = action
     switch (type) {
       case   ACTION_SET_IS_DATE_SELECTOR_VISIBLE:
