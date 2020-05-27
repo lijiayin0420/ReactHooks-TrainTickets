@@ -21,6 +21,7 @@ import {
   showDateSelector,
   hideDateSelector,
   setDepartDate,
+  toggleHighSpeed,
 } from './actions'
 import { h0 } from '../common/fp'
 
@@ -33,6 +34,7 @@ function App(props) {
     isLoadingCityData,
     departDate,
     isDateSelectorVisible,
+    highSpeed,
     dispatch,
   } = props
 
@@ -79,6 +81,15 @@ function App(props) {
     )
   }, [])
 
+  const highSpeedCbs = useMemo(() => {
+    return bindActionCreators(
+      {
+        toggle: toggleHighSpeed,
+      },
+      dispatch,
+    )
+  }, [])
+
   const onSelectDate = useCallback((day) => {
     if (!day) {
       return
@@ -100,7 +111,10 @@ function App(props) {
       <form className="form">
         <Journey from={from} to={to} {...cbs} />
         <DepartDate time={departDate} {...departDateCbs} />
-        <HighSpeed />
+        <HighSpeed
+          highSpeed={highSpeed}
+          {...highSpeedCbs}
+        />
         <Submit />
       </form>
       <CitySelector
