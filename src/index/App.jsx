@@ -10,6 +10,7 @@ import Journey from './Journey.jsx'
 import Submit from './Submit.jsx'
 
 import CitySelector from '../common/CitySelector.jsx'
+import DateSelector from '../common/DateSelector.jsx'
 
 import {
   exchangeFromTo,
@@ -18,7 +19,10 @@ import {
   fetchCityData,
   setSelectedCity,
   showDateSelector,
+  hideDateSelector,
+  setDepartDate,
 } from './actions'
+import { h0 } from '../common/fp'
 
 function App(props) {
   const {
@@ -28,6 +32,7 @@ function App(props) {
     cityData,
     isLoadingCityData,
     departDate,
+    isDateSelectorVisible,
     dispatch,
   } = props
 
@@ -65,6 +70,28 @@ function App(props) {
     )
   }, [])
 
+  const dateSelectorCbs = useMemo(() => {
+    return bindActionCreators(
+      {
+        onBack: hideDateSelector,
+      },
+      dispatch,
+    )
+  }, [])
+
+  const onSelectDate = useCallback((day) => {
+    if (!day) {
+      return
+    }
+
+    if (day < h0()) {
+      return
+    }
+
+    dispatch(setDepartDate(day))
+    dispatch(hideDateSelector())
+  }, [])
+
   return (
     <div>
       <div className="header-wrapper">
@@ -81,6 +108,11 @@ function App(props) {
         cityData={cityData}
         isLoading={isLoadingCityData}
         {...citySelectorCbs}
+      />
+      <DateSelector
+        show={isDateSelectorVisible}
+        {...dateSelectorCbs}
+        onSelect={onSelectDate}
       />
     </div>
   )
