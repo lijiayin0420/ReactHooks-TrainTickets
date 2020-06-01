@@ -44,6 +44,7 @@ function App(props) {
     departTimeEnd,
     arriveTimeStart,
     arriveTimeEnd,
+    trainList,
     dispatch,
   } = props
 
@@ -150,7 +151,7 @@ function App(props) {
         isPrevDisabled={isPrevDisabled}
         isNextDisabled={isNextDisabled}
       />
-      <List />
+      <List list={trainList}/>
       <Bottom />
     </div>
   )

@@ -38,9 +38,9 @@ export function setTo(to) {
 }
 export function setDepartDate(departDate) {
   return {
-    type: ACTION_SET_DEPART_DATE,
-    payload: departDate,
-  }
+      type: ACTION_SET_DEPART_DATE,
+      payload: departDate,
+  };
 }
 export function setHighSpeed(highSpeed) {
   return {
