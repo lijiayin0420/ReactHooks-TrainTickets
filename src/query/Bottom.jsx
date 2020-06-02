@@ -1,6 +1,8 @@
 import React, { memo, useState, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
+
+import Slider from './Slider.jsx'
 import { ORDER_DEPART } from './constants'
 import './Bottom.css'
 
@@ -88,6 +90,7 @@ const BottomModal = memo(function BottomModal(props) {
     toggleIsFiltersVisible,
   } = props
 
+  // 本地的数据缓冲区
   const [localCheckedTicketTypes, setLocalCheckedTicketTypes] = useState(() => {
     return {
       ...checkedTicketTypes,
@@ -112,6 +115,10 @@ const BottomModal = memo(function BottomModal(props) {
       }
     },
   )
+  const [localDepartTimeStart, setLocalDepartTimeStart] = useState(departTimeStart)
+  const [localDepartTimeEnd, setLocalDepartTimeEnd] = useState(departTimeEnd)
+  const [localArriveTimeStart, setLocalArriveTimeStart] = useState(arriveTimeStart)
+  const [localArriveTimeEnd, setLocalArriveTimeEnd] = useState(arriveTimeEnd)
 
   const optionGroup = [
     {
@@ -152,6 +159,20 @@ const BottomModal = memo(function BottomModal(props) {
             {optionGroup.map((group) => (
               <Option {...group} key={group.title} />
             ))}
+            <Slider 
+            title='出发时间'
+            currentStartHours={localDepartTimeStart}
+            currentEndHours={localDepartTimeEnd}
+            onStartChanged={setLocalDepartTimeStart}
+            onEndChanged={setLocalDepartTimeEnd}
+            />
+            <Slider 
+            title='到达时间'
+            currentStartHours={localArriveTimeStart}
+            currentEndHours={localArriveTimeEnd}
+            onStartChanged={setLocalArriveTimeStart}
+            onEndChanged={setLocalArriveTimeEnd}
+            />
           </div>
         </div>
       </div>
