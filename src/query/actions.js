@@ -21,7 +21,7 @@ export const ACTION_SET_DEPART_TIME_START = 'SET_DEPART_TIME_START'
 export const ACTION_SET_DEPART_TIME_END = 'SET_DEPART_TIME_END'
 export const ACTION_SET_ARRIVE_TIME_START = 'SET_ARRIVE_TIME_START'
 export const ACTION_SET_ARRIVE_TIME_END = 'SET_ARRIVE_TIME_END'
-export const ACTION_SET_IS_FILTER_VISIBLE = 'ACTION_SET_IS_FILTER_VISIBLE'
+export const ACTION_SET_IS_FILTERS_VISIBLE = 'ACTION_SET_IS_FILTERS_VISIBLE'
 export const ACTION_SET_SEARCH_PARSED = 'SET_SEARCH_PARSED'
 
 export function setFrom(from) {
@@ -157,11 +157,11 @@ export function setArriveTimeEnd(arriveTimeEnd) {
     payload: arriveTimeEnd,
   }
 }
-export function toggleIsFilterVisible() {
+export function toggleIsFiltersVisible() {
   return (dispatch, getState) => {
     const { isFilterVisible } = getState()
     dispatch({
-      type: ACTION_SET_IS_FILTER_VISIBLE,
+      type: ACTION_SET_IS_FILTERS_VISIBLE,
       payload: !isFilterVisible,
     })
   }

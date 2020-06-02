@@ -27,7 +27,15 @@ import {
   toggleOrderType,
   toggleHighSpeed,
   toggleOnlyTickets,
-  toggleIsFilterVisible,
+  toggleIsFiltersVisible,
+  setCheckedTicketTypes,
+  setCheckedTrainTypes,
+  setCheckedDepartStations,
+  setCheckedArriveStations,
+  setDepartTimeStart,
+  setDepartTimeEnd,
+  setArriveTimeStart,
+  setArriveTimeEnd,
 } from './actions'
 
 import './App.css'
@@ -41,7 +49,11 @@ function App(props) {
     searchParsed,
     orderType,
     onlyTickets,
-    isFiltersVisible,
+    isFilterVisible,
+    ticketTypes,
+    trainTypes,
+    departStations,
+    arriveStations,
     checkedTicketTypes,
     checkedTrainTypes,
     checkedDepartStations,
@@ -142,12 +154,23 @@ function App(props) {
   )
 
   const bottomCbs = useMemo(() => {
-    return bindActionCreators({
-      toggleOrderType,
-      toggleHighSpeed,
-      toggleOnlyTickets,
-      toggleIsFilterVisible,
-    }, dispatch)
+    return bindActionCreators(
+      {
+        toggleOrderType,
+        toggleHighSpeed,
+        toggleOnlyTickets,
+        toggleIsFiltersVisible,
+        setCheckedTicketTypes,
+        setCheckedTrainTypes,
+        setCheckedDepartStations,
+        setCheckedArriveStations,
+        setDepartTimeStart,
+        setDepartTimeEnd,
+        setArriveTimeStart,
+        setArriveTimeEnd,
+      },
+      dispatch,
+    )
   }, [])
 
   if (!searchParsed) {
@@ -171,7 +194,19 @@ function App(props) {
         highSpeed={highSpeed}
         orderType={orderType}
         onlyTickets={onlyTickets}
-        isFiltersVisible={isFiltersVisible}
+        isFilterVisible={isFilterVisible}
+        ticketTypes={ticketTypes}
+        trainTypes={trainTypes}
+        departStations={departStations}
+        arriveStations={arriveStations}
+        checkedTicketTypes={checkedTicketTypes}
+        checkedTrainTypes={checkedTrainTypes}
+        checkedDepartStations={checkedDepartStations}
+        checkedArriveStations={checkedArriveStations}
+        departTimeStart={departTimeStart}
+        departTimeEnd={departTimeEnd}
+        arriveTimeStart={arriveTimeStart}
+        arriveTimeEnd={arriveTimeEnd}
         {...bottomCbs}
       />
     </div>

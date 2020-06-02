@@ -18,7 +18,7 @@ import {
   ACTION_SET_DEPART_TIME_END,
   ACTION_SET_ARRIVE_TIME_START,
   ACTION_SET_ARRIVE_TIME_END,
-  ACTION_SET_IS_FILTER_VISIBLE,
+  ACTION_SET_IS_FILTERS_VISIBLE,
   ACTION_SET_SEARCH_PARSED,
 } from './actions'
 import { ORDER_DEPART } from './constants'
@@ -217,7 +217,7 @@ export default {
   isFilterVisible(state = false, action) {
     const { type, payload } = action
     switch (type) {
-      case ACTION_SET_IS_FILTER_VISIBLE:
+      case ACTION_SET_IS_FILTERS_VISIBLE:
         return payload
       default:
     }
