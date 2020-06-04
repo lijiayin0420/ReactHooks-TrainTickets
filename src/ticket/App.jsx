@@ -9,6 +9,7 @@ import Header from '../common/Header.jsx'
 import Nav from '../common/Nav.jsx'
 import Detail from '../common/Detail.jsx'
 import Candidate from './Candidate.jsx'
+import { TrainContext } from './context'
 // import Schedule from './Schedule.jsx' // 同步引入
 import './App.css'
 
@@ -139,6 +140,11 @@ function App(props) {
           {...detailCbs}
         />
       </div>
+      <TrainContext.Provider
+        value={{ trainNumber, departStation, arriveStation, departDate }}
+      >
+        <Candidate tickets={tickets} />
+      </TrainContext.Provider>
       {isScheduleVisible && (
         <div
           className="mask"
