@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useMemo } from 'react'
+import React, { useEffect, useCallback, useMemo, lazy, Suspense } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import URI from 'urijs'
@@ -9,7 +9,7 @@ import Header from '../common/Header.jsx'
 import Nav from '../common/Nav.jsx'
 import Detail from '../common/Detail.jsx'
 import Candidate from './Candidate.jsx'
-import Schedule from './Schedule.jsx'
+// import Schedule from './Schedule.jsx' // 同步引入
 import './App.css'
 
 import {
@@ -20,15 +20,16 @@ import {
   setSearchParsed,
   prevDate,
   nextDate,
-
   setDepartTimeStr,
   setArriveTimeStr,
   setArriveDate,
   setDurationStr,
   setTickets,
-
   toggleIsScheduleVisible,
 } from './actions'
+
+// 异步引入: 异步组件需要用Suspense包裹
+const Schedule = lazy(() => import('./Schedule.jsx'))
 
 function App(props) {
   const {
@@ -99,9 +100,12 @@ function App(props) {
   )
 
   const detailCbs = useMemo(() => {
-    return bindActionCreators({
-      toggleIsScheduleVisible,
-    }, dispatch)
+    return bindActionCreators(
+      {
+        toggleIsScheduleVisible,
+      },
+      dispatch,
+    )
   }, [])
 
   if (!searchParsed) {
@@ -122,8 +126,8 @@ function App(props) {
           next={next}
         />
       </div>
-      <div className='detail-wrapper'>
-        <Detail 
+      <div className="detail-wrapper">
+        <Detail
           departDate={departDate}
           arriveDate={arriveDate}
           departTimeStr={departTimeStr}
@@ -135,6 +139,21 @@ function App(props) {
           {...detailCbs}
         />
       </div>
+      {isScheduleVisible && (
+        <div
+          className="mask"
+          onClick={() => dispatch(toggleIsScheduleVisible())}
+        >
+          <Suspense fallback={<div>loading</div>}>
+            <Schedule
+              date={departDate}
+              trainNumber={trainNumber}
+              departStation={departStation}
+              arriveStation={arriveStation}
+            />
+          </Suspense>
+        </div>
+      )}
     </div>
   )
 }
