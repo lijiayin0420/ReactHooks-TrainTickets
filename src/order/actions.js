@@ -142,7 +142,7 @@ export function createAdult() {
           name: '',
           ticketType: 'adult',
           licenceNo: '',
-          seat: '2',
+          seat: 'Z',
         },
       ]),
     )
@@ -165,8 +165,9 @@ export function createChild() {
       }
     }
 
-    if (adultFound) {
+    if (!adultFound) {
       alert(' 请至少正确添加一个同行成人')
+      return
     }
 
     dispatch(
@@ -178,8 +179,8 @@ export function createChild() {
           gender: 'none',
           birthday: '',
           followAdult: '',
-          ticketType: 'adult',
-          seat: '2',
+          ticketType: 'child',
+          seat: 'Z',
         },
       ]),
     )
