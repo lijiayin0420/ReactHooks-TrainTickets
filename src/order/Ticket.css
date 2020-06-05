@@ -7,13 +7,11 @@
 .ticket p {
     position: absolute;
     width: 100%;
-    text-align: center;
+    text-align: center;  
 }
 
 .ticket p .ticket-type {
     display: inline-block;
-    height: 44px;
-    line-height: 44px;
     padding: 0 10px;
 }
 
