@@ -21,6 +21,8 @@ import {
   fetchInitial,
   createAdult,
   createChild,
+  removePassenger,
+  updatePassenger,
 } from './actions'
 
 function App(props) {
@@ -77,6 +79,8 @@ function App(props) {
     return bindActionCreators({
       createAdult,
       createChild,
+      removePassenger,
+      updatePassenger,
     }, dispatch)
   }, [])
 
