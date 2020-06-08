@@ -65,7 +65,7 @@ function App(props) {
     dispatch(setSeatType(type))
     dispatch(setDepartDate(dayjs(date).valueOf()))
     dispatch(setSearchParsed(true))
-  }, [])
+  }, [dispatch])
 
   useEffect(() => {
     if (!searchParsed) {
@@ -79,7 +79,7 @@ function App(props) {
       .toString()
 
     dispatch(fetchInitial(url))
-  }, [searchParsed, departStation, arriveStation, seatType, departDate])
+  }, [searchParsed, departStation, arriveStation, seatType, departDate, dispatch])
 
   const passengersCbs = useMemo(() => {
     return bindActionCreators({
@@ -91,19 +91,19 @@ function App(props) {
       showFollowAdultMenu,
       showTicketTypeMenu,
     }, dispatch)
-  }, [])
+  }, [dispatch])
 
   const menuCbs = useMemo(() => {
     return bindActionCreators({
       hideMenu,
     }, dispatch)
-  }, [])
+  }, [dispatch])
 
   const chooseCbs = useMemo(() => {
     return bindActionCreators({
       updatePassenger,
     }, dispatch)
-  }, [])
+  }, [dispatch])
 
   if (!searchParsed) {
     return null

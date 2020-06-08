@@ -62,7 +62,7 @@ function App(props) {
     dispatch(setDepartDate(h0(dayjs(date).valueOf())))
 
     dispatch(setSearchParsed(true))
-  }, [])
+  }, [dispatch])
 
   useEffect(() => {
     document.title = trainNumber
@@ -91,7 +91,7 @@ function App(props) {
         dispatch(setDurationStr(durationStr))
         dispatch(setTickets(candidates))
       })
-  }, [searchParsed])
+  }, [departDate, dispatch, searchParsed, trainNumber])
 
   const { isPrevDisabled, isNextDisabled, prev, next } = useNav(
     departDate,
@@ -107,7 +107,7 @@ function App(props) {
       },
       dispatch,
     )
-  }, [])
+  }, [dispatch])
 
   if (!searchParsed) {
     return null

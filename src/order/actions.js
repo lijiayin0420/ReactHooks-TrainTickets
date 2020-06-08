@@ -1,5 +1,3 @@
-import Passengers from './Passengers'
-
 export const ACTION_SET_TRAIN_NUMBER = 'SET_TRAIN_NUMBER'
 export const ACTION_SET_DEPART_STATION = 'SET_DEPART_STATION'
 export const ACTION_SET_ARRIVE_STATION = 'SET_ARRIVE_STATION'

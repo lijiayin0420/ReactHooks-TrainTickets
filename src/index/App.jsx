@@ -50,7 +50,7 @@ function App(props) {
       },
       dispatch,
     )
-  }, [])
+  }, [dispatch])
 
   const citySelectorCbs = useMemo(() => {
     return bindActionCreators(
@@ -61,7 +61,7 @@ function App(props) {
       },
       dispatch,
     )
-  }, [])
+  }, [dispatch])
 
   const departDateCbs = useMemo(() => {
     return bindActionCreators(
@@ -70,7 +70,7 @@ function App(props) {
       },
       dispatch,
     )
-  }, [])
+  }, [dispatch])
 
   const dateSelectorCbs = useMemo(() => {
     return bindActionCreators(
@@ -79,7 +79,7 @@ function App(props) {
       },
       dispatch,
     )
-  }, [])
+  }, [dispatch])
 
   const highSpeedCbs = useMemo(() => {
     return bindActionCreators(
@@ -88,7 +88,7 @@ function App(props) {
       },
       dispatch,
     )
-  }, [])
+  }, [dispatch])
 
   const onSelectDate = useCallback((day) => {
     if (!day) {
@@ -101,7 +101,7 @@ function App(props) {
 
     dispatch(setDepartDate(day))
     dispatch(hideDateSelector())
-  }, [])
+  }, [dispatch])
 
   return (
     <div>
