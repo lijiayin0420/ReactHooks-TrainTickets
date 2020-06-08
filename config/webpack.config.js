@@ -1,4 +1,4 @@
-'use strict';
+
 
 const fs = require('fs');
 const isWsl = require('is-wsl');
@@ -25,6 +25,8 @@ const getClientEnvironment = require('./env');
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const ForkTsCheckerWebpackPlugin = require('react-dev-utils/ForkTsCheckerWebpackPlugin');
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+  .BundleAnalyzerPlugin;
 
 const postcssNormalize = require('postcss-normalize');
 
@@ -45,7 +47,7 @@ const sassModuleRegex = /\.module\.(scss|sass)$/;
 
 // This is the production and development configuration.
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
-module.exports = function(webpackEnv) {
+module.exports = function (webpackEnv) {
   const isEnvDevelopment = webpackEnv === 'development';
   const isEnvProduction = webpackEnv === 'production';
 
@@ -132,24 +134,24 @@ module.exports = function(webpackEnv) {
       index: [
         paths.appIndexJs,
         isEnvDevelopment &&
-        require.resolve('react-dev-utils/webpackHotDevClient'),
+          require.resolve('react-dev-utils/webpackHotDevClient'),
       ].filter(Boolean),
       query: [
         paths.appQueryJs,
         isEnvDevelopment &&
-        require.resolve('react-dev-utils/webpackHotDevClient'),
+          require.resolve('react-dev-utils/webpackHotDevClient'),
       ].filter(Boolean),
       ticket: [
         paths.appTicketJs,
         isEnvDevelopment &&
-        require.resolve('react-dev-utils/webpackHotDevClient'),
+          require.resolve('react-dev-utils/webpackHotDevClient'),
       ].filter(Boolean),
       order: [
         paths.appOrderJs,
         isEnvDevelopment &&
-        require.resolve('react-dev-utils/webpackHotDevClient'),
+          require.resolve('react-dev-utils/webpackHotDevClient'),
       ].filter(Boolean),
-    }, 
+    },
     // [
     //   // Include an alternative client for WebpackDevServer. A client's job is to
     //   // connect to WebpackDevServer by a socket and get notified about changes.
@@ -190,12 +192,13 @@ module.exports = function(webpackEnv) {
       publicPath: publicPath,
       // Point sourcemap entries to original disk location (format as URL on Windows)
       devtoolModuleFilenameTemplate: isEnvProduction
-        ? info =>
+        ? (info) =>
             path
               .relative(paths.appSrc, info.absoluteResourcePath)
               .replace(/\\/g, '/')
         : isEnvDevelopment &&
-          (info => path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')),
+          ((info) =>
+            path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')),
     },
     optimization: {
       minimize: isEnvProduction,
@@ -288,8 +291,8 @@ module.exports = function(webpackEnv) {
       // `web` extension prefixes have been added for better support
       // for React Native Web.
       extensions: paths.moduleFileExtensions
-        .map(ext => `.${ext}`)
-        .filter(ext => useTypeScript || !ext.includes('ts')),
+        .map((ext) => `.${ext}`)
+        .filter((ext) => useTypeScript || !ext.includes('ts')),
       alias: {
         // Support React Native Web
         // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
@@ -330,7 +333,6 @@ module.exports = function(webpackEnv) {
               options: {
                 formatter: require.resolve('react-dev-utils/eslintFormatter'),
                 eslintPath: require.resolve('eslint'),
-                
               },
               loader: require.resolve('eslint-loader'),
             },
@@ -363,7 +365,7 @@ module.exports = function(webpackEnv) {
                 customize: require.resolve(
                   'babel-preset-react-app/webpack-overrides'
                 ),
-                
+
                 plugins: [
                   [
                     require.resolve('babel-plugin-named-asset-import'),
@@ -402,7 +404,7 @@ module.exports = function(webpackEnv) {
                 ],
                 cacheDirectory: true,
                 cacheCompression: isEnvProduction,
-                
+
                 // If an error happens in a package, it's possible to be
                 // because it was compiled. Thus, we don't want the browser
                 // debugger to show the original code. Instead, the code
@@ -497,6 +499,11 @@ module.exports = function(webpackEnv) {
       ],
     },
     plugins: [
+      process.env.GENERATE_BUNDLE_ANALYZER === 'true' &&
+        new BundleAnalyzerPlugin({
+          openAnalyzer: false,
+          analyzerMode: 'static',
+        }),
       // Generates an `index.html` file with the <script> injected.
       new HtmlWebpackPlugin(
         Object.assign(
@@ -654,7 +661,7 @@ module.exports = function(webpackEnv) {
         fileName: 'asset-manifest.json',
         publicPath: publicPath,
         generate: (seed, files) => {
-          const manifestFiles = files.reduce(function(manifest, file) {
+          const manifestFiles = files.reduce(function (manifest, file) {
             manifest[file.name] = file.path;
             return manifest;
           }, seed);
