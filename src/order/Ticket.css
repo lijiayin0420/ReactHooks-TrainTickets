@@ -21,7 +21,7 @@
 }
 
 .ticket p .ticket-price::before {
-  content: "\FFE5";
+  content: '\FFE5';
   font-size: 14px;
 }
 

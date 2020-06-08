@@ -1,10 +1,10 @@
-import React, { memo, useState, useEffect } from "react";
-import PropTypes from "prop-types";
-import URI from "urijs";
-import dayjs from "dayjs";
-import classNames from "classnames";
-import leftPad from "left-pad";
-import "./Schedule.css";
+import React, { memo, useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import URI from 'urijs';
+import dayjs from 'dayjs';
+import classNames from 'classnames';
+import leftPad from 'left-pad';
+import './Schedule.css';
 
 const ScheduleRow = memo(function ScheduleRow(props) {
   const {
@@ -25,40 +25,40 @@ const ScheduleRow = memo(function ScheduleRow(props) {
   return (
     <li>
       <div
-        className={classNames("icon", {
-          "icon-red": isDepartStation || isArriveStation,
+        className={classNames('icon', {
+          'icon-red': isDepartStation || isArriveStation,
         })}
       >
-        {isDepartStation ? "出" : isArriveStation ? "到" : leftPad(index, 2, 0)}
+        {isDepartStation ? '出' : isArriveStation ? '到' : leftPad(index, 2, 0)}
       </div>
       <div
-        className={classNames("row", {
+        className={classNames('row', {
           grey: beforeDepartStation || afterArriveStation,
         })}
       >
         <span
-          className={classNames("station", {
+          className={classNames('station', {
             red: isArriveStation || isDepartStation,
           })}
         >
           {station}
         </span>
         <span
-          className={classNames("arrtime", {
+          className={classNames('arrtime', {
             red: isArriveStation,
           })}
         >
-          {isArriveStation ? "始发站" : arriveTime}
+          {isArriveStation ? '始发站' : arriveTime}
         </span>
         <span
-          className={classNames("deptime", {
+          className={classNames('deptime', {
             red: isDepartStation,
           })}
         >
-          {isDepartStation ? "终到站" : departTime}
+          {isDepartStation ? '终到站' : departTime}
         </span>
         <span className="stoptime">
-          {isStartStation || isEndStation ? "-" : stay + "分"}
+          {isStartStation || isEndStation ? '-' : stay + '分'}
         </span>
       </div>
     </li>
@@ -71,11 +71,11 @@ const Schedule = memo(function Schedule(props) {
   const [scheduleList, setScheduleList] = useState([]);
 
   useEffect(() => {
-    const url = new URI("/rest/schedule")
-      .setSearch("trainNumber", trainNumber)
-      .setSearch("departStation", departStation)
-      .setSearch("arriveStation", arriveStation)
-      .setSearch("date", dayjs(date).format("YYYY-MM-DD"))
+    const url = new URI('/rest/schedule')
+      .setSearch('trainNumber', trainNumber)
+      .setSearch('departStation', departStation)
+      .setSearch('arriveStation', arriveStation)
+      .setSearch('date', dayjs(date).format('YYYY-MM-DD'))
       .toString();
 
     fetch(url)

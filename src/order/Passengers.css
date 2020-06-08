@@ -68,7 +68,7 @@
 
 .passenger .items .item label.ticket-type::after {
   position: absolute;
-  content: "";
+  content: '';
   width: 11px;
   height: 6px;
   top: 50%;
@@ -97,7 +97,7 @@
 }
 
 .passenger .items .item.arrow::after {
-  content: "";
+  content: '';
   position: absolute;
   width: 7px;
   height: 14px;

@@ -1,7 +1,7 @@
-import React, { memo, useMemo } from "react";
-import URI from "urijs";
-import PropTypes from "prop-types";
-import "./List.css";
+import React, { memo, useMemo } from 'react';
+import URI from 'urijs';
+import PropTypes from 'prop-types';
+import './List.css';
 
 const ListItem = memo(function ListItem(props) {
   const {
@@ -17,11 +17,11 @@ const ListItem = memo(function ListItem(props) {
   } = props;
 
   const url = useMemo(() => {
-    return new URI("ticket.html")
-      .setSearch("aStation", aStation)
-      .setSearch("dStation", dStation)
-      .setSearch("trainNumber", trainNumber)
-      .setSearch("date", date)
+    return new URI('ticket.html')
+      .setSearch('aStation', aStation)
+      .setSearch('dStation', dStation)
+      .setSearch('trainNumber', trainNumber)
+      .setSearch('date', date)
       .toString();
   }, [aStation, dStation, trainNumber, date]);
 

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 
 export default function useWinSize() {
   const [width, setWidth] = useState(document.documentElement.clientWidth);
@@ -10,10 +10,10 @@ export default function useWinSize() {
   };
 
   useEffect(() => {
-    window.addEventListener("resize", onResize, false);
+    window.addEventListener('resize', onResize, false);
 
     return () => {
-      window.removeEventListener("resize", onResize, false);
+      window.removeEventListener('resize', onResize, false);
     };
   }, []);
 

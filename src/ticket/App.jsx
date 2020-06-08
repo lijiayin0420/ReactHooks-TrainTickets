@@ -1,17 +1,17 @@
-import React, { useEffect, useCallback, useMemo, lazy, Suspense } from "react";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-import URI from "urijs";
-import dayjs from "dayjs";
-import { h0 } from "../common/fp";
-import useNav from "../common/useNav";
-import Header from "../common/Header.jsx";
-import Nav from "../common/Nav.jsx";
-import Detail from "../common/Detail.jsx";
-import Candidate from "./Candidate.jsx";
-import { TrainContext } from "./context";
+import React, { useEffect, useCallback, useMemo, lazy, Suspense } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import URI from 'urijs';
+import dayjs from 'dayjs';
+import { h0 } from '../common/fp';
+import useNav from '../common/useNav';
+import Header from '../common/Header.jsx';
+import Nav from '../common/Nav.jsx';
+import Detail from '../common/Detail.jsx';
+import Candidate from './Candidate.jsx';
+import { TrainContext } from './context';
 // import Schedule from './Schedule.jsx' // 同步引入
-import "./App.css";
+import './App.css';
 
 import {
   setDepartStation,
@@ -27,10 +27,10 @@ import {
   setDurationStr,
   setTickets,
   toggleIsScheduleVisible,
-} from "./actions";
+} from './actions';
 
 // 异步引入: 异步组件需要用Suspense包裹
-const Schedule = lazy(() => import("./Schedule.jsx"));
+const Schedule = lazy(() => import('./Schedule.jsx'));
 
 function App(props) {
   const {
@@ -73,9 +73,9 @@ function App(props) {
       return;
     }
 
-    const url = new URI("/rest/ticket")
-      .setSearch("date", dayjs(departDate).format("YYYY-MM-DD"))
-      .setSearch("trainNumber", trainNumber)
+    const url = new URI('/rest/ticket')
+      .setSearch('date', dayjs(departDate).format('YYYY-MM-DD'))
+      .setSearch('trainNumber', trainNumber)
       .toString();
 
     fetch(url)

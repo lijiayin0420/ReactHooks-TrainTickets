@@ -1,16 +1,16 @@
-import React, { useCallback, useMemo } from "react";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-import "./App.css";
+import React, { useCallback, useMemo } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import './App.css';
 
-import Header from "../common/Header.jsx";
-import DepartDate from "./DepartDate.jsx";
-import HighSpeed from "./HighSpeed.jsx";
-import Journey from "./Journey.jsx";
-import Submit from "./Submit.jsx";
+import Header from '../common/Header.jsx';
+import DepartDate from './DepartDate.jsx';
+import HighSpeed from './HighSpeed.jsx';
+import Journey from './Journey.jsx';
+import Submit from './Submit.jsx';
 
-import CitySelector from "../common/CitySelector.jsx";
-import DateSelector from "../common/DateSelector.jsx";
+import CitySelector from '../common/CitySelector.jsx';
+import DateSelector from '../common/DateSelector.jsx';
 
 import {
   exchangeFromTo,
@@ -22,8 +22,8 @@ import {
   hideDateSelector,
   setDepartDate,
   toggleHighSpeed,
-} from "./actions";
-import { h0 } from "../common/fp";
+} from './actions';
+import { h0 } from '../common/fp';
 
 function App(props) {
   const {

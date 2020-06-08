@@ -20,8 +20,8 @@ import {
   ACTION_SET_ARRIVE_TIME_END,
   ACTION_SET_IS_FILTERS_VISIBLE,
   ACTION_SET_SEARCH_PARSED,
-} from "./actions";
-import { ORDER_DEPART } from "./constants";
+} from './actions';
+import { ORDER_DEPART } from './constants';
 
 export default {
   from(state = null, action) {

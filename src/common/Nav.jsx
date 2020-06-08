@@ -1,24 +1,24 @@
-import React, { useMemo, memo } from "react";
-import classNames from "classnames";
-import PropTypes from "prop-types";
-import dayjs from "dayjs";
-import "dayjs/locale/zh-cn";
-import "./Nav.css";
+import React, { useMemo, memo } from 'react';
+import classNames from 'classnames';
+import PropTypes from 'prop-types';
+import dayjs from 'dayjs';
+import 'dayjs/locale/zh-cn';
+import './Nav.css';
 
 const Nav = memo(function Nav(props) {
   const { date, prev, next, isPrevDisabled, isNextDisabled } = props;
 
   const currentString = useMemo(() => {
     const d = dayjs(date);
-    return d.format("M月D日") + d.locale("zh-cn").format("ddd");
+    return d.format('M月D日') + d.locale('zh-cn').format('ddd');
   }, [date]);
 
   return (
     <div className="nav">
       <span
         onClick={prev}
-        className={classNames("nav-prev", {
-          "nav-disabled": isPrevDisabled,
+        className={classNames('nav-prev', {
+          'nav-disabled': isPrevDisabled,
         })}
       >
         前一天
@@ -26,8 +26,8 @@ const Nav = memo(function Nav(props) {
       <span className="nav-current">{currentString}</span>
       <span
         onClick={next}
-        className={classNames("nav-next", {
-          "nav-disabled": isNextDisabled,
+        className={classNames('nav-next', {
+          'nav-disabled': isNextDisabled,
         })}
       >
         后一天

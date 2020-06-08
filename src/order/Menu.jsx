@@ -1,7 +1,7 @@
-import React, { memo } from "react";
-import PropTypes from "prop-types";
-import classNames from "classnames";
-import "./Menu.css";
+import React, { memo } from 'react';
+import PropTypes from 'prop-types';
+import classNames from 'classnames';
+import './Menu.css';
 
 const MenuItem = memo(function MenuItem(props) {
   const { onPress, title, value, active } = props;
@@ -26,7 +26,7 @@ const Menu = memo(function Menu(props) {
   return (
     <div>
       {show && <div className="menu-mask" onClick={() => hideMenu()}></div>}
-      <div className={classNames("menu", { show })}>
+      <div className={classNames('menu', { show })}>
         <div className="menu-title"></div>
         <ul>
           {options &&

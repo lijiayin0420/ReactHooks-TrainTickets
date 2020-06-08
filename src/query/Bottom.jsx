@@ -1,17 +1,17 @@
-import React, { memo, useState, useMemo, useReducer } from "react";
-import PropTypes from "prop-types";
-import classNames from "classnames";
+import React, { memo, useState, useMemo, useReducer } from 'react';
+import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
-import Slider from "./Slider.jsx";
-import { ORDER_DEPART } from "./constants";
-import "./Bottom.css";
+import Slider from './Slider.jsx';
+import { ORDER_DEPART } from './constants';
+import './Bottom.css';
 
 function checkedReducer(state, action) {
   const { type, payload } = action;
 
   let newState;
   switch (type) {
-    case "toggle":
+    case 'toggle':
       newState = { ...state };
       if (payload in newState) {
         delete newState[payload];
@@ -19,7 +19,7 @@ function checkedReducer(state, action) {
         newState[payload] = true;
       }
       return newState;
-    case "reset":
+    case 'reset':
       return {};
     default:
   }
@@ -31,7 +31,7 @@ const Filter = memo(function Filter(props) {
   return (
     <li
       className={classNames({ checked })}
-      onClick={() => dispatch({ payload: value, type: "toggle" })}
+      onClick={() => dispatch({ payload: value, type: 'toggle' })}
     >
       {name}
     </li>
@@ -153,25 +153,25 @@ const BottomModal = memo(function BottomModal(props) {
 
   const optionGroup = [
     {
-      title: "坐席类型",
+      title: '坐席类型',
       options: ticketTypes,
       checkedMap: localCheckedTicketTypes,
       dispatch: localCheckedTicketTypesDispatch,
     },
     {
-      title: "车次类型",
+      title: '车次类型',
       options: trainTypes,
       checkedMap: localCheckedTrainTypes,
       dispatch: localCheckedTrainTypesDispatch,
     },
     {
-      title: "出发车站",
+      title: '出发车站',
       options: departStations,
       checkedMap: localCheckedDepartStations,
       dispatch: localCheckedDepartStationsDispatch,
     },
     {
-      title: "到达车站",
+      title: '到达车站',
       options: arriveStations,
       checkedMap: localCheckedArriveStations,
       dispatch: localCheckedArriveStationsDispatch,
@@ -218,10 +218,10 @@ const BottomModal = memo(function BottomModal(props) {
   function reset() {
     if (isResetDisabled) return;
 
-    localCheckedTicketTypesDispatch({ type: "reset" });
-    localCheckedTrainTypesDispatch({ type: "reset" });
-    localCheckedDepartStationsDispatch({ type: "reset" });
-    localCheckedArriveStationsDispatch({ type: "reset" });
+    localCheckedTicketTypesDispatch({ type: 'reset' });
+    localCheckedTrainTypesDispatch({ type: 'reset' });
+    localCheckedDepartStationsDispatch({ type: 'reset' });
+    localCheckedArriveStationsDispatch({ type: 'reset' });
     setLocalDepartTimeStart(0);
     setLocalDepartTimeEnd(24);
     setLocalArriveTimeStart(0);
@@ -234,7 +234,7 @@ const BottomModal = memo(function BottomModal(props) {
         <div className="bottom-dialog-content">
           <div className="title">
             <span
-              className={classNames("reset", {
+              className={classNames('reset', {
                 disabled: isResetDisabled,
               })}
               onClick={reset}
@@ -354,29 +354,29 @@ export default function Bottom(props) {
       <div className="bottom-filters">
         <span className="item" onClick={toggleOrderType}>
           <i className="icon">&#xf065;</i>
-          {orderType === ORDER_DEPART ? "出发 早➡️晚" : "耗时 短➡️长"}
+          {orderType === ORDER_DEPART ? '出发 早➡️晚' : '耗时 短➡️长'}
         </span>
         <span
-          className={classNames("item", { "item-on": highSpeed })}
+          className={classNames('item', { 'item-on': highSpeed })}
           onClick={toggleHighSpeed}
         >
-          <i className="icon">{highSpeed ? "\uf43f" : "\uf43e"}</i>
+          <i className="icon">{highSpeed ? '\uf43f' : '\uf43e'}</i>
           只看高铁动车
         </span>
         <span
-          className={classNames("item", { "item-on": onlyTickets })}
+          className={classNames('item', { 'item-on': onlyTickets })}
           onClick={toggleOnlyTickets}
         >
-          <i className="icon">{onlyTickets ? "\uf43d" : "\uf43c"}</i>
+          <i className="icon">{onlyTickets ? '\uf43d' : '\uf43c'}</i>
           只看有票
         </span>
         <span
-          className={classNames("item", {
-            "item-on": isFilterVisible || !noChecked,
+          className={classNames('item', {
+            'item-on': isFilterVisible || !noChecked,
           })}
           onClick={toggleIsFiltersVisible}
         >
-          <i className="icon">{noChecked ? "\uf0f7" : "\uf446"}</i>
+          <i className="icon">{noChecked ? '\uf0f7' : '\uf446'}</i>
           综合筛选
         </span>
       </div>

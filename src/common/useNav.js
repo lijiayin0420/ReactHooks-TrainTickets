@@ -1,5 +1,5 @@
-import { useCallback } from "react";
-import { h0 } from "./fp";
+import { useCallback } from 'react';
+import { h0 } from './fp';
 
 export default function useNav(departDate, dispatch, prevDate, nextDate) {
   const isPrevDisabled = h0(departDate) <= h0();

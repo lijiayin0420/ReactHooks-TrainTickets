@@ -1,13 +1,13 @@
-import React, { memo, useMemo } from "react";
-import PropTypes from "prop-types";
-import dayjs from "dayjs";
-import "dayjs/locale/zh-cn";
-import "./Detail.css";
+import React, { memo, useMemo } from 'react';
+import PropTypes from 'prop-types';
+import dayjs from 'dayjs';
+import 'dayjs/locale/zh-cn';
+import './Detail.css';
 
 function format(d) {
   const date = dayjs(d);
 
-  return date.format("MM-DD") + " " + date.locale("zh-cn").format("ddd");
+  return date.format('MM-DD') + ' ' + date.locale('zh-cn').format('ddd');
 }
 
 const Detail = memo(function Detail(props) {

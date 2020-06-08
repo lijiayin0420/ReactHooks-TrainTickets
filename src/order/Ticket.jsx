@@ -1,6 +1,6 @@
-import React, { memo } from "react";
-import PropTypes from "prop-types";
-import "./Ticket.css";
+import React, { memo } from 'react';
+import PropTypes from 'prop-types';
+import './Ticket.css';
 
 const Ticket = memo(function Ticket(props) {
   const { price, type } = props;

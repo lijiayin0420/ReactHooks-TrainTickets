@@ -1,7 +1,7 @@
-import React, { memo } from "react";
-import PropTypes from "prop-types";
-import classNames from "classnames";
-import "./Choose.css";
+import React, { memo } from 'react';
+import PropTypes from 'prop-types';
+import classNames from 'classnames';
+import './Choose.css';
 
 const Choose = memo(function Choose(props) {
   const { passengers, updatePassenger } = props;
@@ -13,7 +13,7 @@ const Choose = memo(function Choose(props) {
           return (
             <p
               key={passenger.id}
-              className={classNames("seat", {
+              className={classNames('seat', {
                 active: passenger.seat === seatType,
               })}
               data-text={seatType}
@@ -33,12 +33,12 @@ const Choose = memo(function Choose(props) {
       <div className="container">
         <div className="seats">
           <div>窗</div>
-          {createSeat("A")}
-          {createSeat("B")}
-          {createSeat("C")}
+          {createSeat('A')}
+          {createSeat('B')}
+          {createSeat('C')}
           <div>过道</div>
-          {createSeat("E")}
-          {createSeat("F")}
+          {createSeat('E')}
+          {createSeat('F')}
           <div>窗</div>
         </div>
       </div>

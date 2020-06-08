@@ -10,7 +10,7 @@ import {
   ACTION_SET_TICKETS,
   ACTION_SET_IS_SCHEDULE_VISIBLE,
   ACTION_SET_SEARCH_PARSED,
-} from "./actions";
+} from './actions';
 
 export default {
   departDate(state = Date.now(), action) {

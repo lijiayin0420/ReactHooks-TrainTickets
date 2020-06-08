@@ -1,8 +1,8 @@
-import React, { memo, useState, useMemo, useRef, useEffect } from "react";
-import PropTypes from "prop-types";
-import leftPad from "left-pad";
-import useWinSize from "../common/useWinSize";
-import "./Slider.css";
+import React, { memo, useState, useMemo, useRef, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import leftPad from 'left-pad';
+import useWinSize from '../common/useWinSize';
+import './Slider.css';
 
 const Slider = memo(function Slider(props) {
   const {
@@ -69,11 +69,11 @@ const Slider = memo(function Slider(props) {
   }, [endPercent]);
 
   const startText = useMemo(() => {
-    return leftPad(startHours, 2, "0") + ":00";
+    return leftPad(startHours, 2, '0') + ':00';
   }, [startHours]);
 
   const endText = useMemo(() => {
-    return leftPad(endHours, 2, "0") + ":00";
+    return leftPad(endHours, 2, '0') + ':00';
   }, [endHours]);
 
   function onStartTouchBegin(e) {
@@ -110,31 +110,31 @@ const Slider = memo(function Slider(props) {
 
   useEffect(() => {
     startHandle.current.addEventListener(
-      "touchstart",
+      'touchstart',
       onStartTouchBegin,
       false
     );
-    startHandle.current.addEventListener("touchmove", onStartTouchMove, false);
-    endHandle.current.addEventListener("touchstart", onEndTouchBegin, false);
-    endHandle.current.addEventListener("touchmove", onEndTouchMove, false);
+    startHandle.current.addEventListener('touchmove', onStartTouchMove, false);
+    endHandle.current.addEventListener('touchstart', onEndTouchBegin, false);
+    endHandle.current.addEventListener('touchmove', onEndTouchMove, false);
 
     return () => {
       startHandle.current.removeEventListener(
-        "touchstart",
+        'touchstart',
         onStartTouchBegin,
         false
       );
       startHandle.current.removeEventListener(
-        "touchmove",
+        'touchmove',
         onStartTouchMove,
         false
       );
       endHandle.current.removeEventListener(
-        "touchstart",
+        'touchstart',
         onEndTouchBegin,
         false
       );
-      endHandle.current.removeEventListener("touchmove", onEndTouchMove, false);
+      endHandle.current.removeEventListener('touchmove', onEndTouchMove, false);
     };
   }, []);
 
@@ -154,15 +154,15 @@ const Slider = memo(function Slider(props) {
           <div
             className="slider-range"
             style={{
-              left: startPercent + "%",
-              width: endPercent - startPercent + "%",
+              left: startPercent + '%',
+              width: endPercent - startPercent + '%',
             }}
           ></div>
           <i
             ref={startHandle}
             className="slider-handle"
             style={{
-              left: startPercent + "%",
+              left: startPercent + '%',
             }}
           >
             <span>{startText}</span>
@@ -171,7 +171,7 @@ const Slider = memo(function Slider(props) {
             ref={endHandle}
             className="slider-handle"
             style={{
-              left: endPercent + "%",
+              left: endPercent + '%',
             }}
           >
             <span>{endText}</span>

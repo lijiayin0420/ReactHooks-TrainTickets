@@ -1,17 +1,17 @@
-import React, { useCallback, useEffect, useMemo } from "react";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-import URI from "urijs";
-import dayjs from "dayjs";
-import Header from "../common/Header.jsx";
-import Detail from "../common/Detail.jsx";
-import Account from "./Account.jsx";
-import Choose from "./Choose.jsx";
-import Passengers from "./Passengers.jsx";
-import Ticket from "./Ticket.jsx";
-import Menu from "./Menu.jsx";
+import React, { useCallback, useEffect, useMemo } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import URI from 'urijs';
+import dayjs from 'dayjs';
+import Header from '../common/Header.jsx';
+import Detail from '../common/Detail.jsx';
+import Account from './Account.jsx';
+import Choose from './Choose.jsx';
+import Passengers from './Passengers.jsx';
+import Ticket from './Ticket.jsx';
+import Menu from './Menu.jsx';
 
-import "./App.css";
+import './App.css';
 
 import {
   setDepartStation,
@@ -29,7 +29,7 @@ import {
   showGenderMenu,
   showFollowAdultMenu,
   showTicketTypeMenu,
-} from "./actions";
+} from './actions';
 
 function App(props) {
   const {
@@ -71,11 +71,11 @@ function App(props) {
     if (!searchParsed) {
       return;
     }
-    const url = new URI("/rest/order")
-      .setSearch("sStation", departStation)
-      .setSearch("aStation", arriveStation)
-      .setSearch("type", seatType)
-      .setSearch("date", dayjs(departDate).format("YYYY-MM-DD"))
+    const url = new URI('/rest/order')
+      .setSearch('sStation', departStation)
+      .setSearch('aStation', arriveStation)
+      .setSearch('type', seatType)
+      .setSearch('date', dayjs(departDate).format('YYYY-MM-DD'))
       .toString();
 
     dispatch(fetchInitial(url));
@@ -141,7 +141,7 @@ function App(props) {
           arriveStation={arriveStation}
           durationStr={durationStr}
         >
-          <span style={{ display: "bolck" }} className="train-icon"></span>
+          <span style={{ display: 'bolck' }} className="train-icon"></span>
         </Detail>
       </div>
       <Ticket price={price} type={seatType} />

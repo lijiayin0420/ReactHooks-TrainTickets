@@ -1,7 +1,7 @@
-import React, { memo, useState } from "react";
-import PropTypes from "prop-types";
-import classNames from "classnames";
-import "./Account.css";
+import React, { memo, useState } from 'react';
+import PropTypes from 'prop-types';
+import classNames from 'classnames';
+import './Account.css';
 
 const Account = memo(function Account(props) {
   const { price = 0, length } = props;
@@ -11,7 +11,7 @@ const Account = memo(function Account(props) {
   return (
     <div className="account">
       <div
-        className={classNames("price", { expanded })}
+        className={classNames('price', { expanded })}
         onClick={() => setExpanded(!expanded)}
       >
         <div className="money">{length * price}</div>
@@ -19,10 +19,10 @@ const Account = memo(function Account(props) {
       </div>
       <div className="button">提交按钮</div>
       <div
-        className={classNames("layer", { hidden: !expanded })}
+        className={classNames('layer', { hidden: !expanded })}
         onClick={() => setExpanded(false)}
       ></div>
-      <div className={classNames("detail", { hidden: !expanded })}>
+      <div className={classNames('detail', { hidden: !expanded })}>
         <div className="title">金额详情</div>
         <ul>
           <li>

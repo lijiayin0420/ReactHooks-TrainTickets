@@ -1,10 +1,10 @@
-import { createStore, combineReducers, applyMiddleware } from "redux";
+import { createStore, combineReducers, applyMiddleware } from 'redux';
 
-import reducers from "./reducers";
-import thunk from "redux-thunk";
+import reducers from './reducers';
+import thunk from 'redux-thunk';
 
-import { h0 } from "../common/fp";
-import { ORDER_DEPART } from "./constants";
+import { h0 } from '../common/fp';
+import { ORDER_DEPART } from './constants';
 
 export default createStore(
   combineReducers(reducers),

@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useMemo, memo, useCallback } from "react";
-import PropTypes from "prop-types";
-import classNames from "classnames";
-import "./CitySelector.css";
+import React, { useState, useEffect, useMemo, memo, useCallback } from 'react';
+import PropTypes from 'prop-types';
+import classNames from 'classnames';
+import './CitySelector.css';
 
 const CityItem = memo(function CityItem(props) {
   const { name, onSelect } = props;
@@ -112,7 +112,7 @@ const Suggest = memo(function Suggest(props) {
   const [result, setResult] = useState([]);
 
   useEffect(() => {
-    fetch("/rest/search?key=" + encodeURIComponent(searchKey))
+    fetch('/rest/search?key=' + encodeURIComponent(searchKey))
       .then((res) => res.json())
       .then((data) => {
         const { result, searchKey: sKey } = data;
@@ -160,7 +160,7 @@ Suggest.propTypes = {
 const CitySelector = memo(function CitySelector(props) {
   const { show, cityData, isLoading, onBack, fetchCityData, onSelect } = props;
 
-  const [searchKey, setSearchKey] = useState("");
+  const [searchKey, setSearchKey] = useState('');
 
   const key = useMemo(() => searchKey.trim(), [searchKey]);
 
@@ -194,7 +194,7 @@ const CitySelector = memo(function CitySelector(props) {
   };
 
   return (
-    <div className={classNames("city-selector", { hidden: !show })}>
+    <div className={classNames('city-selector', { hidden: !show })}>
       <div className="city-search">
         <div className="search-back" onClick={() => onBack()}>
           <svg width="42" height="42">
@@ -216,8 +216,8 @@ const CitySelector = memo(function CitySelector(props) {
           />
         </div>
         <i
-          className={classNames("search-clean", { hidden: key.length === 0 })}
-          onClick={() => setSearchKey("")}
+          className={classNames('search-clean', { hidden: key.length === 0 })}
+          onClick={() => setSearchKey('')}
         >
           &#xf063;
         </i>

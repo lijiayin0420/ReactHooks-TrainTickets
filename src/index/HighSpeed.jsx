@@ -1,7 +1,7 @@
-import React from "react";
-import PropTypes from "prop-types";
-import classNames from "classnames";
-import "./HighSpeed.css";
+import React from 'react';
+import PropTypes from 'prop-types';
+import classNames from 'classnames';
+import './HighSpeed.css';
 
 export default function HighSpeed(props) {
   const { highSpeed, toggle } = props;
@@ -11,9 +11,9 @@ export default function HighSpeed(props) {
       <div className="high-speed-label">只看高铁/动车</div>
       <div className="high-speed-switch" onClick={() => toggle()}>
         <input type="hidden" name="highSpeed" value={highSpeed} />
-        <div className={classNames("high-speed-track", { checked: highSpeed })}>
+        <div className={classNames('high-speed-track', { checked: highSpeed })}>
           <span
-            className={classNames("high-speed-handle", { checked: highSpeed })}
+            className={classNames('high-speed-handle', { checked: highSpeed })}
           ></span>
         </div>
       </div>

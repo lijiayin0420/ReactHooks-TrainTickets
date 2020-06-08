@@ -1,15 +1,15 @@
-export const ACTION_SET_FROM = "SET_FROM";
-export const ACTION_SET_TO = "SET_TO";
+export const ACTION_SET_FROM = 'SET_FROM';
+export const ACTION_SET_TO = 'SET_TO';
 export const ACTION_SET_IS_CITY_SELECTOR_VISIBLE =
-  "SET_IS_CITY_SELECTOR_VISIBLE";
+  'SET_IS_CITY_SELECTOR_VISIBLE';
 export const ACTION_SET_CURRENT_SELECTING_LEFT_CITY =
-  "SET_CURRENT_SELECTING_LEFT_CITY";
-export const ACTION_SET_CITY_DATA = "SET_CITY_DATA";
-export const ACTION_SET_IS_LOADING_CITY_DATA = "SET_IS_LOADING_CITY_DATA";
+  'SET_CURRENT_SELECTING_LEFT_CITY';
+export const ACTION_SET_CITY_DATA = 'SET_CITY_DATA';
+export const ACTION_SET_IS_LOADING_CITY_DATA = 'SET_IS_LOADING_CITY_DATA';
 export const ACTION_SET_IS_DATE_SELECTOR_VISIBLE =
-  "SET_IS_DATE_SELECTOR_VISIBLE";
-export const ACTION_SET_HIGH_SPEED = "SET_HIGH_SPEED";
-export const ACTION_SET_DEPART_DATE = "SET_DEPART_DATE";
+  'SET_IS_DATE_SELECTOR_VISIBLE';
+export const ACTION_SET_HIGH_SPEED = 'SET_HIGH_SPEED';
+export const ACTION_SET_DEPART_DATE = 'SET_DEPART_DATE';
 
 export function setFrom(from) {
   return {
@@ -119,7 +119,7 @@ export function fetchCityData() {
       return;
     }
 
-    const cache = localStorage.getItem("city_data_cache" || "{}");
+    const cache = localStorage.getItem('city_data_cache' || '{}');
 
     if (Date.now() < cache.expires) {
       dispatch(setCityData(cache.data));
@@ -128,13 +128,13 @@ export function fetchCityData() {
 
     dispatch(setIsLoadingCitydata(true));
 
-    fetch("/rest/cities?_" + Date.now())
+    fetch('/rest/cities?_' + Date.now())
       .then((res) => res.json())
       .then((cityData) => {
         dispatch(setCityData(cityData));
 
         localStorage.setItem(
-          "city_data_cache",
+          'city_data_cache',
           JSON.stringify({
             expires: Date.now() + 60 * 1000,
             data: cityData,

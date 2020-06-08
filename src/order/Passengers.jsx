@@ -1,6 +1,6 @@
-import React, { memo, useMemo } from "react";
-import PropTypes from "prop-types";
-import "./Passengers.css";
+import React, { memo, useMemo } from 'react';
+import PropTypes from 'prop-types';
+import './Passengers.css';
 
 const Passenger = memo(function Passenger(props) {
   const {
@@ -18,7 +18,7 @@ const Passenger = memo(function Passenger(props) {
     showTicketTypeMenu,
   } = props;
 
-  const isAdult = ticketType === "adult";
+  const isAdult = ticketType === 'adult';
 
   return (
     <li className="passenger">
@@ -36,7 +36,7 @@ const Passenger = memo(function Passenger(props) {
             onChange={(e) => onUpdate(id, { name: e.target.value })}
           />
           <label className="ticket-type" onClick={() => showTicketTypeMenu(id)}>
-            {isAdult ? "成人票" : "儿童票"}
+            {isAdult ? '成人票' : '儿童票'}
           </label>
         </li>
         {isAdult && (
@@ -59,7 +59,7 @@ const Passenger = memo(function Passenger(props) {
               className="input gender"
               placeholder="请选择"
               onClick={() => showGenderMenu(id)}
-              value={gender === "male" ? "男" : gender === "female" ? "女" : ""}
+              value={gender === 'male' ? '男' : gender === 'female' ? '女' : ''}
               readOnly
             />
           </li>

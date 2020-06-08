@@ -1,17 +1,17 @@
-export const ACTION_SET_TRAIN_NUMBER = "SET_TRAIN_NUMBER";
-export const ACTION_SET_DEPART_STATION = "SET_DEPART_STATION";
-export const ACTION_SET_ARRIVE_STATION = "SET_ARRIVE_STATION";
-export const ACTION_SET_SEAT_TYPE = "SET_SEAT_TYPE";
-export const ACTION_SET_DEPART_DATE = "SET_DEPART_DATE";
-export const ACTION_SET_ARRIVE_DATE = "SET_ARRIVE_DATE";
-export const ACTION_SET_DEPART_TIME_STR = "SET_DEPART_TIME_STR";
-export const ACTION_SET_ARRIVE_TIME_STR = "SET_ARRIVE_TIME_STR";
-export const ACTION_SET_DURATION_STR = "SET_DURATION_STR";
-export const ACTION_SET_PRICE = "SET_PRICE";
-export const ACTION_SET_PASSENGERS = "SET_PASSENGERS";
-export const ACTION_SET_MENU = "SET_MENU";
-export const ACTION_SET_IS_MENU_VISIBLE = "SET_IS_MENU_VISIBLE";
-export const ACTION_SET_SEARCH_PARSED = "SET_SEARCH_PARSED";
+export const ACTION_SET_TRAIN_NUMBER = 'SET_TRAIN_NUMBER';
+export const ACTION_SET_DEPART_STATION = 'SET_DEPART_STATION';
+export const ACTION_SET_ARRIVE_STATION = 'SET_ARRIVE_STATION';
+export const ACTION_SET_SEAT_TYPE = 'SET_SEAT_TYPE';
+export const ACTION_SET_DEPART_DATE = 'SET_DEPART_DATE';
+export const ACTION_SET_ARRIVE_DATE = 'SET_ARRIVE_DATE';
+export const ACTION_SET_DEPART_TIME_STR = 'SET_DEPART_TIME_STR';
+export const ACTION_SET_ARRIVE_TIME_STR = 'SET_ARRIVE_TIME_STR';
+export const ACTION_SET_DURATION_STR = 'SET_DURATION_STR';
+export const ACTION_SET_PRICE = 'SET_PRICE';
+export const ACTION_SET_PASSENGERS = 'SET_PASSENGERS';
+export const ACTION_SET_MENU = 'SET_MENU';
+export const ACTION_SET_IS_MENU_VISIBLE = 'SET_IS_MENU_VISIBLE';
+export const ACTION_SET_SEARCH_PARSED = 'SET_SEARCH_PARSED';
 
 export function setTrainNumber(trainNumber) {
   return {
@@ -137,10 +137,10 @@ export function createAdult() {
         ...passengers,
         {
           id: ++passengerIdSeed,
-          name: "",
-          ticketType: "adult",
-          licenceNo: "",
-          seat: "Z",
+          name: '',
+          ticketType: 'adult',
+          licenceNo: '',
+          seat: 'Z',
         },
       ])
     );
@@ -158,13 +158,13 @@ export function createChild() {
         if (!passenger[key]) return;
       }
 
-      if (passenger.ticketType === "adult") {
+      if (passenger.ticketType === 'adult') {
         adultFound = passenger.id;
       }
     }
 
     if (!adultFound) {
-      alert(" 请至少正确添加一个同行成人");
+      alert(' 请至少正确添加一个同行成人');
       return;
     }
 
@@ -173,12 +173,12 @@ export function createChild() {
         ...passengers,
         {
           id: ++passengerIdSeed,
-          name: "",
-          gender: "none",
-          birthday: "",
+          name: '',
+          gender: 'none',
+          birthday: '',
           followAdult: adultFound,
-          ticketType: "child",
-          seat: "Z",
+          ticketType: 'child',
+          seat: 'Z',
         },
       ])
     );
@@ -241,14 +241,14 @@ export function showGenderMenu(id) {
         },
         options: [
           {
-            title: "男",
-            value: "male",
-            active: "male" === passenger.gender,
+            title: '男',
+            value: 'male',
+            active: 'male' === passenger.gender,
           },
           {
-            title: "女",
-            value: "female",
-            active: "female" === passenger.gender,
+            title: '女',
+            value: 'female',
+            active: 'female' === passenger.gender,
           },
         ],
       })
@@ -273,7 +273,7 @@ export function showFollowAdultMenu(id) {
           dispatch(hideMenu());
         },
         options: passengers
-          .filter((passenger) => passenger.ticketType === "adult")
+          .filter((passenger) => passenger.ticketType === 'adult')
           .map((adult) => {
             return {
               title: adult.passengerIdSeed,
@@ -299,21 +299,21 @@ export function showTicketTypeMenu(id) {
     dispatch(
       showMenu({
         onPress(ticketType) {
-          if ("adult" === ticketType) {
+          if ('adult' === ticketType) {
             dispatch(
               updatePassenger(
                 id,
                 {
                   ticketType,
-                  licenceNo: "",
+                  licenceNo: '',
                 },
-                ["gender", "followAdult", "birthday"]
+                ['gender', 'followAdult', 'birthday']
               )
             );
           } else {
             const adult = passengers.find(
               (passenger) =>
-                passenger.id !== id && passenger.ticketType === "adult"
+                passenger.id !== id && passenger.ticketType === 'adult'
             );
             if (adult) {
               dispatch(
@@ -321,15 +321,15 @@ export function showTicketTypeMenu(id) {
                   id,
                   {
                     ticketType,
-                    gender: "",
+                    gender: '',
                     followAdult: adult.id,
-                    birthday: "",
+                    birthday: '',
                   },
-                  ["licenceNo"]
+                  ['licenceNo']
                 )
               );
             } else {
-              alert("没有其他成人乘客");
+              alert('没有其他成人乘客');
             }
           }
 
@@ -337,14 +337,14 @@ export function showTicketTypeMenu(id) {
         },
         options: [
           {
-            title: "成人票",
-            value: "adult",
-            active: "adult" === passenger.ticketType,
+            title: '成人票',
+            value: 'adult',
+            active: 'adult' === passenger.ticketType,
           },
           {
-            title: "儿童票",
-            value: "child",
-            active: "child" === passenger.ticketType,
+            title: '儿童票',
+            value: 'child',
+            active: 'child' === passenger.ticketType,
           },
         ],
       })

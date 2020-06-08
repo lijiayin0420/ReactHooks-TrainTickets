@@ -13,7 +13,7 @@ import {
   ACTION_SET_MENU,
   ACTION_SET_IS_MENU_VISIBLE,
   ACTION_SET_SEARCH_PARSED,
-} from "./actions";
+} from './actions';
 
 export default {
   trainNumber(state = null, action) {

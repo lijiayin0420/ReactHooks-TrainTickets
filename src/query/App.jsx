@@ -1,15 +1,15 @@
-import React, { useCallback, useEffect, useMemo } from "react";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-import URI from "urijs";
-import dayjs from "dayjs";
+import React, { useCallback, useEffect, useMemo } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import URI from 'urijs';
+import dayjs from 'dayjs';
 
-import { h0 } from "../common/fp";
-import Header from "../common/Header.jsx";
-import Nav from "../common/Nav.jsx";
-import List from "./List.jsx";
-import Bottom from "./Bottom.jsx";
-import useNav from "../common/useNav";
+import { h0 } from '../common/fp';
+import Header from '../common/Header.jsx';
+import Nav from '../common/Nav.jsx';
+import List from './List.jsx';
+import Bottom from './Bottom.jsx';
+import useNav from '../common/useNav';
 
 import {
   setFrom,
@@ -36,9 +36,9 @@ import {
   setDepartTimeEnd,
   setArriveTimeStart,
   setArriveTimeEnd,
-} from "./actions";
+} from './actions';
 
-import "./App.css";
+import './App.css';
 
 function App(props) {
   const {
@@ -74,7 +74,7 @@ function App(props) {
     dispatch(setFrom(from));
     dispatch(setTo(to));
     dispatch(setDepartDate(h0(dayjs(date).valueOf())));
-    dispatch(setHighSpeed(highSpeed === "true"));
+    dispatch(setHighSpeed(highSpeed === 'true'));
     dispatch(setSearchParsed(true));
   }, [dispatch]);
 
@@ -83,27 +83,27 @@ function App(props) {
       return;
     }
 
-    const url = new URI("/rest/query")
-      .setSearch("from", from)
-      .setSearch("to", to)
-      .setSearch("date", dayjs(departDate).format("YYYY-MM-DD"))
-      .setSearch("highSpeed", highSpeed)
-      .setSearch("orderType", orderType)
-      .setSearch("onlyTickets", onlyTickets)
-      .setSearch("checkedTicketTypes", Object.keys(checkedTicketTypes).join())
-      .setSearch("checkedTrainTypes", Object.keys(checkedTrainTypes).join())
+    const url = new URI('/rest/query')
+      .setSearch('from', from)
+      .setSearch('to', to)
+      .setSearch('date', dayjs(departDate).format('YYYY-MM-DD'))
+      .setSearch('highSpeed', highSpeed)
+      .setSearch('orderType', orderType)
+      .setSearch('onlyTickets', onlyTickets)
+      .setSearch('checkedTicketTypes', Object.keys(checkedTicketTypes).join())
+      .setSearch('checkedTrainTypes', Object.keys(checkedTrainTypes).join())
       .setSearch(
-        "checkedDepartStations",
+        'checkedDepartStations',
         Object.keys(checkedDepartStations).join()
       )
       .setSearch(
-        "checkedArriveStations",
+        'checkedArriveStations',
         Object.keys(checkedArriveStations).join()
       )
-      .setSearch("departTimeStart", departTimeStart)
-      .setSearch("departTimeEnd", departTimeEnd)
-      .setSearch("arriveTimeStart", arriveTimeStart)
-      .setSearch("arriveTimeEnd", arriveTimeEnd)
+      .setSearch('departTimeStart', departTimeStart)
+      .setSearch('departTimeEnd', departTimeEnd)
+      .setSearch('arriveTimeStart', arriveTimeStart)
+      .setSearch('arriveTimeEnd', arriveTimeEnd)
       .toString();
 
     fetch(url)

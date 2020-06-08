@@ -1,11 +1,11 @@
-import React from "react";
-import classNames from "classnames";
-import PropTypes from "prop-types";
+import React from 'react';
+import classNames from 'classnames';
+import PropTypes from 'prop-types';
 
-import { h0 } from "./fp";
-import Header from "./Header.jsx";
+import { h0 } from './fp';
+import Header from './Header.jsx';
 
-import "./DateSelector.css";
+import './DateSelector.css';
 
 function Day(props) {
   const { day, onSelect } = props;
@@ -19,14 +19,14 @@ function Day(props) {
   const now = h0();
 
   if (day < now) {
-    classes.push("disabled");
+    classes.push('disabled');
   }
 
   if ([6, 0].includes(new Date(day).getDay())) {
-    classes.push("weekend");
+    classes.push('weekend');
   }
 
-  const dateString = now === day ? "今天" : new Date(day).getDate();
+  const dateString = now === day ? '今天' : new Date(day).getDate();
 
   return (
     <td className={classNames(classes)} onClick={() => onSelect(day)}>
@@ -139,7 +139,7 @@ export default function DateSelector(props) {
   monthSequence.push(now.getTime());
 
   return (
-    <div className={classNames("date-selector", { hidden: !show })}>
+    <div className={classNames('date-selector', { hidden: !show })}>
       <Header title="日期选择" onBack={onBack} />
       <div className="date-selector-tables">
         {monthSequence.map((month) => {
