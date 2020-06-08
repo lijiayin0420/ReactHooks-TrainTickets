@@ -13,133 +13,133 @@ import {
   ACTION_SET_MENU,
   ACTION_SET_IS_MENU_VISIBLE,
   ACTION_SET_SEARCH_PARSED,
-} from './actions'
+} from "./actions";
 
 export default {
   trainNumber(state = null, action) {
-    const { type, payload } = action
+    const { type, payload } = action;
     switch (type) {
       case ACTION_SET_TRAIN_NUMBER:
-        return payload
+        return payload;
       default:
     }
-    return state
+    return state;
   },
   departStation(state = null, action) {
-    const { type, payload } = action
+    const { type, payload } = action;
     switch (type) {
       case ACTION_SET_DEPART_STATION:
-        return payload
+        return payload;
       default:
     }
-    return state
+    return state;
   },
   arriveStation(state = null, action) {
-    const { type, payload } = action
+    const { type, payload } = action;
     switch (type) {
       case ACTION_SET_ARRIVE_STATION:
-        return payload
+        return payload;
       default:
     }
-    return state
+    return state;
   },
   seatType(state = null, action) {
-    const { type, payload } = action
+    const { type, payload } = action;
     switch (type) {
       case ACTION_SET_SEAT_TYPE:
-        return payload
+        return payload;
       default:
     }
-    return state
+    return state;
   },
   departDate(state = null, action) {
-    const { type, payload } = action
+    const { type, payload } = action;
     switch (type) {
       case ACTION_SET_DEPART_DATE:
-        return payload
+        return payload;
       default:
     }
-    return state
+    return state;
   },
   arriveDate(state = null, action) {
-    const { type, payload } = action
+    const { type, payload } = action;
     switch (type) {
       case ACTION_SET_ARRIVE_DATE:
-        return payload
+        return payload;
       default:
     }
-    return state
+    return state;
   },
   departTimeStr(state = null, action) {
-    const { type, payload } = action
+    const { type, payload } = action;
     switch (type) {
       case ACTION_SET_DEPART_TIME_STR:
-        return payload
+        return payload;
       default:
     }
-    return state
+    return state;
   },
   arriveTimeStr(state = null, action) {
-    const { type, payload } = action
+    const { type, payload } = action;
     switch (type) {
       case ACTION_SET_ARRIVE_TIME_STR:
-        return payload
+        return payload;
       default:
     }
-    return state
+    return state;
   },
   durationStr(state = null, action) {
-    const { type, payload } = action
+    const { type, payload } = action;
     switch (type) {
       case ACTION_SET_DURATION_STR:
-        return payload
+        return payload;
       default:
     }
-    return state
+    return state;
   },
   price(state = null, action) {
-    const { type, payload } = action
+    const { type, payload } = action;
     switch (type) {
       case ACTION_SET_PRICE:
-        return payload
+        return payload;
       default:
     }
-    return state
+    return state;
   },
   passengers(state = [], action) {
-    const { type, payload } = action
+    const { type, payload } = action;
     switch (type) {
       case ACTION_SET_PASSENGERS:
-        return payload
+        return payload;
       default:
     }
-    return state
+    return state;
   },
   menu(state = null, action) {
-    const { type, payload } = action
+    const { type, payload } = action;
     switch (type) {
       case ACTION_SET_MENU:
-        return payload
+        return payload;
       default:
     }
-    return state
+    return state;
   },
   isMenuVisible(state = false, action) {
-    const { type, payload } = action
+    const { type, payload } = action;
     switch (type) {
       case ACTION_SET_IS_MENU_VISIBLE:
-        return payload
+        return payload;
       default:
     }
-    return state
+    return state;
   },
   searchParsed(state = false, action) {
-    const { type, payload } = action
+    const { type, payload } = action;
     switch (type) {
       case ACTION_SET_SEARCH_PARSED:
-        return payload
+        return payload;
       default:
     }
-    return state
+    return state;
   },
-}
+};

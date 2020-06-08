@@ -1,13 +1,13 @@
-import React, { memo, useMemo } from 'react'
-import PropTypes from 'prop-types'
-import dayjs from 'dayjs'
-import 'dayjs/locale/zh-cn'
-import './Detail.css'
+import React, { memo, useMemo } from "react";
+import PropTypes from "prop-types";
+import dayjs from "dayjs";
+import "dayjs/locale/zh-cn";
+import "./Detail.css";
 
 function format(d) {
-  const date = dayjs(d)
+  const date = dayjs(d);
 
-  return date.format('MM-DD') + ' ' + date.locale('zh-cn').format('ddd')
+  return date.format("MM-DD") + " " + date.locale("zh-cn").format("ddd");
 }
 
 const Detail = memo(function Detail(props) {
@@ -20,10 +20,10 @@ const Detail = memo(function Detail(props) {
     departStation,
     arriveStation,
     durationStr,
-  } = props
+  } = props;
 
-  const departDateStr = useMemo(() => format(departDate), [departDate])
-  const arriveDateStr = useMemo(() => format(arriveDate), [arriveDate])
+  const departDateStr = useMemo(() => format(departDate), [departDate]);
+  const arriveDateStr = useMemo(() => format(arriveDate), [arriveDate]);
 
   return (
     <div className="detail">
@@ -45,10 +45,10 @@ const Detail = memo(function Detail(props) {
         </div>
       </div>
     </div>
-  )
-})
+  );
+});
 
-export default Detail
+export default Detail;
 
 Detail.propTypes = {
   departDate: PropTypes.number.isRequired,
@@ -59,4 +59,4 @@ Detail.propTypes = {
   departStation: PropTypes.string.isRequired,
   arriveStation: PropTypes.string.isRequired,
   durationStr: PropTypes.string,
-}
+};

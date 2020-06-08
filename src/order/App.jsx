@@ -1,17 +1,17 @@
-import React, { useCallback, useEffect, useMemo } from 'react'
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
-import URI from 'urijs'
-import dayjs from 'dayjs'
-import Header from '../common/Header.jsx'
-import Detail from '../common/Detail.jsx'
-import Account from './Account.jsx'
-import Choose from './Choose.jsx'
-import Passengers from './Passengers.jsx'
-import Ticket from './Ticket.jsx'
-import Menu from './Menu.jsx'
+import React, { useCallback, useEffect, useMemo } from "react";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import URI from "urijs";
+import dayjs from "dayjs";
+import Header from "../common/Header.jsx";
+import Detail from "../common/Detail.jsx";
+import Account from "./Account.jsx";
+import Choose from "./Choose.jsx";
+import Passengers from "./Passengers.jsx";
+import Ticket from "./Ticket.jsx";
+import Menu from "./Menu.jsx";
 
-import './App.css'
+import "./App.css";
 
 import {
   setDepartStation,
@@ -29,7 +29,7 @@ import {
   showGenderMenu,
   showFollowAdultMenu,
   showTicketTypeMenu,
-} from './actions'
+} from "./actions";
 
 function App(props) {
   const {
@@ -48,65 +48,81 @@ function App(props) {
     isMenuVisible,
     searchParsed,
     dispatch,
-  } = props
+  } = props;
 
   const onBack = useCallback(() => {
-    window.history.back()
-  }, [])
+    window.history.back();
+  }, []);
 
   useEffect(() => {
-    const queries = URI.parseQuery(window.location.search)
+    const queries = URI.parseQuery(window.location.search);
 
-    const { trainNumber, dStation, aStation, type, date } = queries
+    const { trainNumber, dStation, aStation, type, date } = queries;
 
-    dispatch(setDepartStation(dStation))
-    dispatch(setArriveStation(aStation))
-    dispatch(setTrainNumber(trainNumber))
-    dispatch(setSeatType(type))
-    dispatch(setDepartDate(dayjs(date).valueOf()))
-    dispatch(setSearchParsed(true))
-  }, [dispatch])
+    dispatch(setDepartStation(dStation));
+    dispatch(setArriveStation(aStation));
+    dispatch(setTrainNumber(trainNumber));
+    dispatch(setSeatType(type));
+    dispatch(setDepartDate(dayjs(date).valueOf()));
+    dispatch(setSearchParsed(true));
+  }, [dispatch]);
 
   useEffect(() => {
     if (!searchParsed) {
-      return
+      return;
     }
-    const url = new URI('/rest/order')
-      .setSearch('sStation', departStation)
-      .setSearch('aStation', arriveStation)
-      .setSearch('type', seatType)
-      .setSearch('date', dayjs(departDate).format('YYYY-MM-DD'))
-      .toString()
+    const url = new URI("/rest/order")
+      .setSearch("sStation", departStation)
+      .setSearch("aStation", arriveStation)
+      .setSearch("type", seatType)
+      .setSearch("date", dayjs(departDate).format("YYYY-MM-DD"))
+      .toString();
 
-    dispatch(fetchInitial(url))
-  }, [searchParsed, departStation, arriveStation, seatType, departDate, dispatch])
+    dispatch(fetchInitial(url));
+  }, [
+    searchParsed,
+    departStation,
+    arriveStation,
+    seatType,
+    departDate,
+    dispatch,
+  ]);
 
   const passengersCbs = useMemo(() => {
-    return bindActionCreators({
-      createAdult,
-      createChild,
-      removePassenger,
-      updatePassenger,
-      showGenderMenu,
-      showFollowAdultMenu,
-      showTicketTypeMenu,
-    }, dispatch)
-  }, [dispatch])
+    return bindActionCreators(
+      {
+        createAdult,
+        createChild,
+        removePassenger,
+        updatePassenger,
+        showGenderMenu,
+        showFollowAdultMenu,
+        showTicketTypeMenu,
+      },
+      dispatch
+    );
+  }, [dispatch]);
 
   const menuCbs = useMemo(() => {
-    return bindActionCreators({
-      hideMenu,
-    }, dispatch)
-  }, [dispatch])
+    return bindActionCreators(
+      {
+        hideMenu,
+      },
+      dispatch
+    );
+  }, [dispatch]);
 
   const chooseCbs = useMemo(() => {
-    return bindActionCreators({
-      updatePassenger,
-    }, dispatch)
-  }, [dispatch])
+    return bindActionCreators(
+      {
+        updatePassenger,
+      },
+      dispatch
+    );
+  }, [dispatch]);
 
   if (!searchParsed) {
-    return null
+    return null;
   }
 
   return (
@@ -125,28 +141,27 @@ function App(props) {
           arriveStation={arriveStation}
           durationStr={durationStr}
         >
-          <span style={{ display: 'bolck' }} className="train-icon"></span>
+          <span style={{ display: "bolck" }} className="train-icon"></span>
         </Detail>
       </div>
-      <Ticket price={price} type={seatType}/>
-      <Passengers passengers={passengers} {...passengersCbs}/>
-      {
-        passengers.length > 0 &&
-        <Choose passengers={passengers} {...chooseCbs}/>
-      }
-      <Account length={passengers.length} price={price}/>
-      <Menu show={isMenuVisible} {...menu} {...menuCbs}/>
+      <Ticket price={price} type={seatType} />
+      <Passengers passengers={passengers} {...passengersCbs} />
+      {passengers.length > 0 && (
+        <Choose passengers={passengers} {...chooseCbs} />
+      )}
+      <Account length={passengers.length} price={price} />
+      <Menu show={isMenuVisible} {...menu} {...menuCbs} />
     </div>
-  )
+  );
 }
 
 export default connect(
   function mapStateToProps(state) {
-    return state
+    return state;
   },
   function mapDispatchToProps(dispatch) {
     return {
       dispatch,
-    }
-  },
-)(App)
+    };
+  }
+)(App);

@@ -1,9 +1,9 @@
-import React from 'react'
-import switchImg from '../imgs/switch.svg'
-import './Journey.css'
+import React from "react";
+import switchImg from "../imgs/switch.svg";
+import "./Journey.css";
 
 export default function Journey(props) {
-  const { from, to, exchangeFromTo, showCitySelector } = props
+  const { from, to, exchangeFromTo, showCitySelector } = props;
 
   return (
     <div className="journey">
@@ -29,5 +29,5 @@ export default function Journey(props) {
         />
       </div>
     </div>
-  )
+  );
 }

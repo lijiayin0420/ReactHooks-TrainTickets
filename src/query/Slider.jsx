@@ -1,8 +1,8 @@
-import React, { memo, useState, useMemo, useRef, useEffect } from 'react'
-import PropTypes from 'prop-types'
-import leftPad from 'left-pad'
-import useWinSize from '../common/useWinSize'
-import './Slider.css'
+import React, { memo, useState, useMemo, useRef, useEffect } from "react";
+import PropTypes from "prop-types";
+import leftPad from "left-pad";
+import useWinSize from "../common/useWinSize";
+import "./Slider.css";
 
 const Slider = memo(function Slider(props) {
   const {
@@ -11,136 +11,140 @@ const Slider = memo(function Slider(props) {
     currentEndHours,
     onStartChanged,
     onEndChanged,
-  } = props
+  } = props;
 
-  const winSize = useWinSize()
+  const winSize = useWinSize();
 
-  const startHandle = useRef()
-  const endHandle = useRef()
+  const startHandle = useRef();
+  const endHandle = useRef();
 
-  const lastStartX = useRef()
-  const lastEndX = useRef()
+  const lastStartX = useRef();
+  const lastEndX = useRef();
 
-  const range = useRef()
-  const rangeWidth = useRef()
+  const range = useRef();
+  const rangeWidth = useRef();
 
-  const prevCurrentStartHours = useRef(currentStartHours)
-  const prevCurrentEndHours = useRef(currentEndHours)
+  const prevCurrentStartHours = useRef(currentStartHours);
+  const prevCurrentEndHours = useRef(currentEndHours);
 
-  const [start, setStart] = useState(() => (currentStartHours / 24) * 100)
-  const [end, setEnd] = useState(() => (currentEndHours / 24) * 100)
+  const [start, setStart] = useState(() => (currentStartHours / 24) * 100);
+  const [end, setEnd] = useState(() => (currentEndHours / 24) * 100);
 
-  if(prevCurrentStartHours.current !== currentStartHours){
-    setStart((currentStartHours / 24) * 100)
-    prevCurrentStartHours.current = currentStartHours
+  if (prevCurrentStartHours.current !== currentStartHours) {
+    setStart((currentStartHours / 24) * 100);
+    prevCurrentStartHours.current = currentStartHours;
   }
 
-  if(prevCurrentEndHours.current !== currentEndHours){
-    setEnd((currentEndHours / 24) * 100)
-    prevCurrentEndHours.current = currentEndHours
+  if (prevCurrentEndHours.current !== currentEndHours) {
+    setEnd((currentEndHours / 24) * 100);
+    prevCurrentEndHours.current = currentEndHours;
   }
 
   const startPercent = useMemo(() => {
     if (start > 100) {
-      return 100
+      return 100;
     }
     if (start < 0) {
-      return 0
+      return 0;
     }
-    return start
-  }, [start])
+    return start;
+  }, [start]);
 
   const endPercent = useMemo(() => {
     if (end > 100) {
-      return 100
+      return 100;
     }
     if (end < 0) {
-      return 0
+      return 0;
     }
-    return end
-  }, [end])
+    return end;
+  }, [end]);
 
   const startHours = useMemo(() => {
-    return Math.round((startPercent * 24) / 100)
-  }, [startPercent])
+    return Math.round((startPercent * 24) / 100);
+  }, [startPercent]);
 
   const endHours = useMemo(() => {
-    return Math.round((endPercent * 24) / 100)
-  }, [endPercent])
+    return Math.round((endPercent * 24) / 100);
+  }, [endPercent]);
 
   const startText = useMemo(() => {
-    return leftPad(startHours, 2, '0') + ':00'
-  }, [startHours])
+    return leftPad(startHours, 2, "0") + ":00";
+  }, [startHours]);
 
   const endText = useMemo(() => {
-    return leftPad(endHours, 2, '0') + ':00'
-  }, [endHours])
+    return leftPad(endHours, 2, "0") + ":00";
+  }, [endHours]);
 
   function onStartTouchBegin(e) {
-    const touch = e.targetTouches[0]
-    lastStartX.current = touch.pageX
+    const touch = e.targetTouches[0];
+    lastStartX.current = touch.pageX;
   }
 
   function onEndTouchBegin(e) {
-    const touch = e.targetTouches[0]
-    lastEndX.current = touch.pageX
+    const touch = e.targetTouches[0];
+    lastEndX.current = touch.pageX;
   }
 
   function onStartTouchMove(e) {
-    const touch = e.targetTouches[0]
-    const distance = touch.pageX - lastStartX.current
-    lastStartX.current = touch.pageX
+    const touch = e.targetTouches[0];
+    const distance = touch.pageX - lastStartX.current;
+    lastStartX.current = touch.pageX;
 
-    setStart((start) => start + (distance / rangeWidth.current) * 100)
+    setStart((start) => start + (distance / rangeWidth.current) * 100);
   }
 
   function onEndTouchMove(e) {
-    const touch = e.targetTouches[0]
-    const distance = touch.pageX - lastEndX.current
-    lastEndX.current = touch.pageX
+    const touch = e.targetTouches[0];
+    const distance = touch.pageX - lastEndX.current;
+    lastEndX.current = touch.pageX;
 
-    setEnd((end) => end + (distance / rangeWidth.current) * 100)
+    setEnd((end) => end + (distance / rangeWidth.current) * 100);
   }
 
   useEffect(() => {
     rangeWidth.current = parseFloat(
-      window.getComputedStyle(range.current).width,
-    )
-  }, [winSize.width])
+      window.getComputedStyle(range.current).width
+    );
+  }, [winSize.width]);
 
   useEffect(() => {
-    startHandle.current.addEventListener('touchstart', onStartTouchBegin, false)
-    startHandle.current.addEventListener('touchmove', onStartTouchMove, false)
-    endHandle.current.addEventListener('touchstart', onEndTouchBegin, false)
-    endHandle.current.addEventListener('touchmove', onEndTouchMove, false)
+    startHandle.current.addEventListener(
+      "touchstart",
+      onStartTouchBegin,
+      false
+    );
+    startHandle.current.addEventListener("touchmove", onStartTouchMove, false);
+    endHandle.current.addEventListener("touchstart", onEndTouchBegin, false);
+    endHandle.current.addEventListener("touchmove", onEndTouchMove, false);
 
     return () => {
       startHandle.current.removeEventListener(
-        'touchstart',
+        "touchstart",
         onStartTouchBegin,
-        false,
-      )
+        false
+      );
       startHandle.current.removeEventListener(
-        'touchmove',
+        "touchmove",
         onStartTouchMove,
-        false,
-      )
+        false
+      );
       endHandle.current.removeEventListener(
-        'touchstart',
+        "touchstart",
         onEndTouchBegin,
-        false,
-      )
-      endHandle.current.removeEventListener('touchmove', onEndTouchMove, false)
-    }
-  }, [])
+        false
+      );
+      endHandle.current.removeEventListener("touchmove", onEndTouchMove, false);
+    };
+  }, []);
 
   useEffect(() => {
-    onStartChanged(startHours)
-  }, [onStartChanged, startHours])
+    onStartChanged(startHours);
+  }, [onStartChanged, startHours]);
 
   useEffect(() => {
-    onEndChanged(endHours)
-  }, [endHours, onEndChanged])
+    onEndChanged(endHours);
+  }, [endHours, onEndChanged]);
 
   return (
     <div className="option">
@@ -150,15 +154,15 @@ const Slider = memo(function Slider(props) {
           <div
             className="slider-range"
             style={{
-              left: startPercent + '%',
-              width: endPercent - startPercent + '%',
+              left: startPercent + "%",
+              width: endPercent - startPercent + "%",
             }}
           ></div>
           <i
             ref={startHandle}
             className="slider-handle"
             style={{
-              left: startPercent + '%',
+              left: startPercent + "%",
             }}
           >
             <span>{startText}</span>
@@ -167,7 +171,7 @@ const Slider = memo(function Slider(props) {
             ref={endHandle}
             className="slider-handle"
             style={{
-              left: endPercent + '%',
+              left: endPercent + "%",
             }}
           >
             <span>{endText}</span>
@@ -175,10 +179,10 @@ const Slider = memo(function Slider(props) {
         </div>
       </div>
     </div>
-  )
-})
+  );
+});
 
-export default Slider
+export default Slider;
 
 Slider.propTypes = {
   title: PropTypes.string.isRequired,
@@ -186,4 +190,4 @@ Slider.propTypes = {
   currentEndHours: PropTypes.number.isRequired,
   onStartChanged: PropTypes.func.isRequired,
   onEndChanged: PropTypes.func.isRequired,
-}
+};

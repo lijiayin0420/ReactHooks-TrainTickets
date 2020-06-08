@@ -1,20 +1,20 @@
-body{
-    min-width: 320px;
-    max-width: 540px;
-    font-size: 16px;
-    margin: 0 auto;
-    padding-top: 88px;
+body {
+  min-width: 320px;
+  max-width: 540px;
+  font-size: 16px;
+  margin: 0 auto;
+  padding-top: 88px;
 }
 
 .hidden,
-[hidden]{
-    display: none !important;
+[hidden] {
+  display: none !important;
 }
 
-:::-webkit-input-placeholder{
-    color: #c7ced4;
+:::-webkit-input-placeholder {
+  color: #c7ced4;
 }
 
-button{
-    -webkit-appearance: none;
+button {
+  -webkit-appearance: none;
 }
