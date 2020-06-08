@@ -9,6 +9,8 @@ import Account from './Account.jsx'
 import Choose from './Choose.jsx'
 import Passengers from './Passengers.jsx'
 import Ticket from './Ticket.jsx'
+import Menu from './Menu.jsx'
+
 import './App.css'
 
 import {
@@ -23,6 +25,10 @@ import {
   createChild,
   removePassenger,
   updatePassenger,
+  hideMenu,
+  showGenderMenu,
+  showFollowAdultMenu,
+  showTicketTypeMenu,
 } from './actions'
 
 function App(props) {
@@ -81,6 +87,15 @@ function App(props) {
       createChild,
       removePassenger,
       updatePassenger,
+      showGenderMenu,
+      showFollowAdultMenu,
+      showTicketTypeMenu,
+    }, dispatch)
+  }, [])
+
+  const menuCbs = useMemo(() => {
+    return bindActionCreators({
+      hideMenu,
     }, dispatch)
   }, [])
 
@@ -109,6 +124,7 @@ function App(props) {
       </div>
       <Ticket price={price} type={seatType}/>
       <Passengers passengers={passengers} {...passengersCbs}/>
+      <Menu show={isMenuVisible} {...menu} {...menuCbs}/>
     </div>
   )
 }
